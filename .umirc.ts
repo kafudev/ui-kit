@@ -11,7 +11,6 @@ export default defineConfig({
   logo: '/logo.png',
   outputPath: 'docs-dist',
   mode: 'site',
-  sitemap: { hostname: '/' },
   navs: [
     null,
     {
