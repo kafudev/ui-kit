@@ -1,17 +1,10 @@
 {
-  "git": {
-    "changelog": "git log --pretty=format:\"* %s (%h)\" ${from}...${to}",
-    "commitMessage": "chore: release ${version}",
-    "tagName": "v${version}",
-    "requireCleanWorkingDir": false,
-    "requireUpstream": false
-  },
   "hooks": {
-    "after:bump": "npx auto-changelog -p"
+    "after:init": ["npm test"]
   },
-  "npm": {
-    "skipChecks": true,
-    "publish": true
+  "git": {
+    "requireUpstream": false,
+    "requireCleanWorkingDir": false
   },
   "github": {
     "release": true
