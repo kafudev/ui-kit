@@ -1,6 +1,6 @@
 {
   "git": {
-    "changelog": "npx auto-changelog --stdout --commit-limit false --unreleased --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs",
+    "changelog": "git log --pretty=format:\"* %s (%h)\" ${from}...${to}",
     "commitMessage": "chore: release ${version}",
     "tagName": "v${version}",
     "requireCleanWorkingDir": false,
@@ -14,8 +14,6 @@
     "publish": true
   },
   "github": {
-    "skipChecks": true,
-    "release": true,
-    "autoGenerate": true
+    "release": true
   }
 }
