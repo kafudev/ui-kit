@@ -1,6 +1,6 @@
 {
   "name": "@kafudev/ui-kit",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "ui-kit",
     "kafudev",
@@ -22,12 +22,11 @@
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d docs-dist",
     "build": "father-build",
-    "deploy": "npm run docs:build && npm run docs:deploy",
+    "deploy": "npm run build && npm run docs:build && npm run docs:deploy && npm run release-ci",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build",
-    "publish": "npm publish --registry=https://registry.npmjs.org",
     "release": "release-it",
     "release-ci": "release-it --ci"
   },
