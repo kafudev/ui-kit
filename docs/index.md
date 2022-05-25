@@ -32,7 +32,7 @@ features:
 footer: Open-source MIT Licensed | © 2022 [卡服科技](http://www.kafukeji.com)
 ---
 
-# UI-KIT 组件库
+# UI-KIT [组件库](https://kafudev.github.io/ui-kit)
 
 > 🚀 快速搭建风格统一化的中后台
 
