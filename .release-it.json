@@ -2,7 +2,9 @@
   "git": {
     "changelog": "npx auto-changelog --stdout --commit-limit false --unreleased --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs",
     "commitMessage": "chore: release ${version}",
-    "tagName": "v${version}"
+    "tagName": "v${version}",
+    "requireCleanWorkingDir": false,
+    "requireUpstream": false
   },
   "hooks": {
     "after:bump": "npx auto-changelog -p"
@@ -12,12 +14,8 @@
     "publish": true
   },
   "github": {
+    "skipChecks": true,
     "release": true,
-    "releaseNotes": "generate-release-notes.sh --from=${latestTag} --to=${tagName}"
-  },
-  "plugins": {
-    "@release-it/conventional-changelog": {
-      "preset": "angular"
-    }
+    "autoGenerate": true
   }
 }
