@@ -29,8 +29,8 @@
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build",
     "publish": "npm publish --registry=https://registry.npmjs.org",
-    "release": "dotenv -- release-it",
-    "release-ci": "dotenv -- release-it --ci"
+    "release": "release-it",
+    "release-ci": "release-it --ci"
   },
   "main": "es/index.js",
   "module": "es/index.js",
@@ -66,6 +66,7 @@
     "@ant-design/pro-list": "^1.21.64",
     "@ant-design/pro-table": "^2.75.1",
     "@ant-design/pro-utils": "^1.41.4",
+    "@release-it/conventional-changelog": "^5.0.0",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.3",
