@@ -27,8 +27,8 @@
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build",
-    "release": "release-it",
-    "release-ci": "release-it --ci"
+    "release": "release-it --github.autoGenerate",
+    "release-ci": "release-it --github.autoGenerate --ci"
   },
   "main": "es/index.js",
   "module": "es/index.js",
