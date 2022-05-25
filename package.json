@@ -37,8 +37,7 @@
   "files": [
     "lib",
     "es",
-    "dist",
-    "docs-dist"
+    "dist"
   ],
   "gitHooks": {
     "pre-commit": "lint-staged"
