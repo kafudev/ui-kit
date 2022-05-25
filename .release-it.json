@@ -12,7 +12,8 @@
     "publish": true
   },
   "github": {
-    "release": true
+    "release": true,
+    "releaseNotes": "generate-release-notes.sh --from=${latestTag} --to=${tagName}"
   },
   "plugins": {
     "@release-it/conventional-changelog": {
