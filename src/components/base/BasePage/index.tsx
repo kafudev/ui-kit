@@ -8,7 +8,7 @@ export interface BasePageProps extends PageContainerProps {
   mode?: 'page' | 'drawer' | 'modal'; // 页面呈现类型
   title?: string | ReactNode; // 页面标题
   extra?: ReactNode | string; // 标题栏扩展按钮
-  cardProps?: ProCardProps | boolean; // 内部card属性
+  cardProps?: ProCardProps; // 内部card属性
 }
 const BasePage: React.FC<BasePageProps> = (props) => {
   const [mode] = React.useState(props.mode || 'page');
