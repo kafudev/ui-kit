@@ -38,6 +38,11 @@
     "es",
     "dist"
   ],
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
