@@ -19,11 +19,11 @@ export default defineConfig({
     null,
     {
       title: 'GitHub',
-      path: 'https://github.com/ant-design/pro-components',
+      path: 'https://github.com/kafudev/ui-kit',
     },
     {
       title: '更新日志',
-      path: 'https://github.com/umijs/dumi/releases',
+      path: 'https://github.com/kafudev/ui-kit/releases',
     },
   ],
   analytics: isProduction
