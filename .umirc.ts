@@ -4,14 +4,16 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const isDeploy = process.env.SITE_DEPLOY === 'TRUE';
 
+const basePath = isProduction ? '/ui-kit/' : '/';
+
 export default defineConfig({
   title: 'UI-KIT',
   description: '快速搭建风格统一化的中后台',
-  favicon: '/favicon.ico',
-  logo: '/logo.png',
+  favicon: basePath + '/favicon.ico',
+  logo: basePath + '/logo.png',
   outputPath: 'docs-dist',
-  base: isProduction ? '/ui-kit/' : '/',
-  publicPath: isProduction ? '/ui-kit/' : '/',
+  base: basePath,
+  publicPath: basePath,
   mode: 'site',
   navs: [
     null,
