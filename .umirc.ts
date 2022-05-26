@@ -10,6 +10,8 @@ export default defineConfig({
   favicon: '/favicon.ico',
   logo: '/logo.png',
   outputPath: 'docs-dist',
+  base: isProduction ? '/ui-kit/' : '/',
+  publicPath: isProduction ? '/ui-kit/' : '/',
   mode: 'site',
   navs: [
     null,
