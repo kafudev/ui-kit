@@ -33,6 +33,6 @@ export default defineConfig({
   // more config: https://d.umijs.org/config
   // ssr: isDeploy ? {} : undefined,
   // webpack5: {},
-  // exportStatic: {},
+  exportStatic: {},
   // mfsu: !isDeploy ? {} : undefined,
 });
