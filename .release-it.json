@@ -14,8 +14,7 @@
     "publish": true
   },
   "github": {
-    "release": true,
-    "releaseNotes": "echo \"${changelog}\""
+    "release": true
   },
   "plugins": {
     "@release-it/conventional-changelog": {
