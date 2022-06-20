@@ -3,7 +3,7 @@ import { BaseEdit, BaseEditProps } from '@kafudev/ui-kit';
 import { findIndexItems } from '@kafudev/ui-kit';
 
 const Page: React.FC<BaseEditProps> = (props) => {
-  const [forms, setForms] = React.useState<any>({
+  const [values] = React.useState<any>({
     title: '标题',
     list: [
       {
@@ -43,8 +43,8 @@ const Page: React.FC<BaseEditProps> = (props) => {
 
   // 表单字段变化
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const changeForms = (changedValues: any, values: any) => {
-    console.log('changeForms:', changedValues, values);
+  const onValuesChange = (changedValues: any, values: any) => {
+    console.log('onValuesChange:', changedValues, values);
     for (const key in changedValues) {
       if (Object.prototype.hasOwnProperty.call(changedValues, key)) {
         const value = changedValues[key];
@@ -74,8 +74,9 @@ const Page: React.FC<BaseEditProps> = (props) => {
     <BaseEdit
       action={props.action || props?.location?.query?.action}
       items={items}
-      forms={forms}
+      values={values}
       onSubmit={onSubmit}
+      onValuesChange={onValuesChange}
     />
   );
 };

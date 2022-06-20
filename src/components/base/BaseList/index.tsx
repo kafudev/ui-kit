@@ -52,9 +52,10 @@ const LogTag = 'BaseList';
 const formatColumns = (_columns: any[]) => {
   for (let index = 0; index < (_columns.length || 0); index++) {
     const _column = _columns[index];
-    _columns[index].dataIndex = _column?.name || _column?.dataIndex || _column?.key;
-    _columns[index].copyable = _column?.copy || _column?.copyable;
-    _columns[index].valueType = _column?.type || _column?.valueType;
+    _columns[index].title = _column?.title || _column?.label;
+    _columns[index].dataIndex = _column?.dataIndex || _column?.name || _column?.key;
+    _columns[index].copyable = _column?.copyable || _column?.copy;
+    _columns[index].valueType = _column?.valueType || _column?.type;
     _columns[index].hideInSearch = true; // 在表单中隐藏
     _columns[index].hideInForm = true; // 在表单中隐藏
     switch (_columns[index].valueType) {
@@ -213,9 +214,9 @@ const formatColumns = (_columns: any[]) => {
 const formatFilters = (_filters: any[]) => {
   for (let index = 0; index < (_filters?.length || 0); index++) {
     const _filter = _filters[index];
-    _filters[index].title = _filter?.label || _filter?.title;
-    _filters[index].dataIndex = _filter?.name || _filter?.dataIndex || _filter?.key;
-    _filters[index].valueType = _filter?.type || _filter?.valueType;
+    _filters[index].title = _filter?.title || _filter?.label;
+    _filters[index].dataIndex = _filter?.dataIndex || _filter?.name || _filter?.key;
+    _filters[index].valueType = _filter?.valueType || _filter?.type;
     _filters[index].renderFormItem = (_filter?.renderFormItem && _filter?.renderFormItem()) || '';
     _filters[index].hideInTable = true; // 在表格中隐藏
   }
@@ -468,7 +469,7 @@ const BaseList: React.FC<BaseListProps> = React.forwardRef((props, ref) => {
   };
 
   // 渲染数据
-  const renderTables = () => {
+  const renderTable = () => {
     return (
       <>
         <ProTable
@@ -499,10 +500,14 @@ const BaseList: React.FC<BaseListProps> = React.forwardRef((props, ref) => {
             ...props.columnsState,
           }}
           rowKey={props?.table?.key || props?.rowKey || 'id'}
-          search={{
-            // labelWidth: 'auto',
-            ...props.search,
-          }}
+          search={
+            filters?.length <= 0 && !props.search
+              ? false
+              : {
+                  labelWidth: 120,
+                  ...props.search,
+                }
+          }
           form={{
             // 由于配置了 transform，提交的参与与定义的不同这里需要转化一下
             syncToUrl: (values, type) => {
@@ -560,7 +565,7 @@ const BaseList: React.FC<BaseListProps> = React.forwardRef((props, ref) => {
   return (
     <BasePage mode={props.mode} {...props?.pageProps}>
       {props.renderTableHeader && props.renderTableHeader()}
-      {renderTables()}
+      {renderTable()}
       {props.children}
       {props.renderTableFooter && props.renderTableFooter()}
     </BasePage>

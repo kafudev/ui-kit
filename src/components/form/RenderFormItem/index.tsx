@@ -43,7 +43,7 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
             colon={item?.label == '' ? false : true}
             {...item}
           >
-            <ProFormGroup>
+            <ProFormGroup key="key">
               {item.items.map((tt: any, ii: number) => {
                 return _renderItem(tt, data, ii);
               })}
@@ -106,7 +106,7 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
               );
             }}
           >
-            <ProFormGroup>
+            <ProFormGroup key="key">
               {item.items.map((tt: any, ii: number) => {
                 return _renderItem(tt, data?.[item?.name], ii);
               })}
@@ -138,7 +138,7 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
               }
             }}
           >
-            <ProFormGroup>
+            <ProFormGroup key="key">
               {item.items?.map((tt: any, ii: number) => {
                 return _renderItem(tt, data?.[item?.name], ii);
               })}
@@ -153,7 +153,13 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
     // 渲染默认的antd组件
     return (
       <>
-        <ProForm.Item extra={item?.desc || ''} {...item}>
+        <ProForm.Item
+          key={key}
+          extra={item?.desc || ''}
+          name={item?.name}
+          label={item?.label}
+          tooltip={item?.tooltip}
+        >
           <RenderItem
             key={key}
             text={data?.[item?.name]}

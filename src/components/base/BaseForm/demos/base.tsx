@@ -10,7 +10,7 @@ const Page: React.FC<any> = (props) => {
   );
   const [rowCol, setRowCol] = React.useState<number>(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [forms, setForms] = React.useState<any>({
+  const [values, setValues] = React.useState<any>({
     title: 'cccc',
     place: 'shop_banner',
     image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -30,6 +30,8 @@ const Page: React.FC<any> = (props) => {
       },
     ],
     switch: false,
+    sstitle: '禁止输入值',
+    ssstitle: '只读输入值',
   });
   const [items, setItems] = React.useState<any>([
     { label: '样式信息', desc: '表单的基本信息', type: 'header' },
@@ -163,7 +165,7 @@ const Page: React.FC<any> = (props) => {
       ],
     },
     { label: '空', name: 'empty', type: 'empty' },
-    { label: '状态', name: 'status', type: 'switch', trueValue: 1, falseValue: 0 },
+    { label: '状态', name: 'status', type: 'switch', trueText: '打开', falseText: '关闭' },
     { label: '空', name: 'empty', type: 'empty' },
     {
       label: '附加字段',
@@ -191,8 +193,8 @@ const Page: React.FC<any> = (props) => {
 
   // 表单字段变化
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const changeForms = (changedValues: any, values: any) => {
-    console.log('changeForms:', changedValues, values);
+  const onValuesChange = (changedValues: any, values: any) => {
+    // console.log('onValuesChange:', changedValues, values);
     for (const key in changedValues) {
       if (Object.prototype.hasOwnProperty.call(changedValues, key)) {
         const value = changedValues[key];
@@ -240,11 +242,9 @@ const Page: React.FC<any> = (props) => {
         // labelCol={{span:6}}
         // wrapperCol={{span:14}}
         layout={formLayoutType}
-        fixedSubmit={props.fixedSubmit}
-        submitTargetId={props.submitTargetId}
         items={items}
-        forms={forms}
-        changeForms={changeForms}
+        values={values}
+        onValuesChange={onValuesChange}
         onSubmit={onSubmit}
       />
     </ProCard>

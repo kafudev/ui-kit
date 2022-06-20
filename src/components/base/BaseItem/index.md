@@ -28,6 +28,10 @@ BaseItem 是为了可直接在表单、详情、表格中渲染单项的输入�
 
 <code src="./demos/info.tsx" iframe="200px" title="详情使用" desc="BaseInfoItem在详情中使用, 包含标签名称label " />
 
+### 列表使用
+
+<code src="./demos/info.tsx" iframe="200px" title="列表使用" desc="BaseListItem在列表中使用, 包含内容显示和编辑输入 " />
+
 ## API
 
 ### BaseItem
@@ -38,6 +42,7 @@ BaseItem 是为了可直接在表单、详情、表格中渲染单项的输入�
 | --- | --- | --- | --- |
 | mode | 渲染类型，read=仅显示，edit=可编辑 | `read \| edit` | `'edit'` |
 | label | 标签名称 | `string \| ReactNode` | - |
+| name | 项目对应的字段名, 跟 ProForm.Item 的[`dataIndex`](https://procomponents.ant.design/components/descriptions#prodescriptionsitem)是同定义 | `string` | - |
 | type | 表单输入组件的类型,会生成不同的渲染器，跟 ProForm 的[`valueType`](https://procomponents.ant.design/components/schema#valuetype)是同定义 | `string` | - |
 | fieldProps | 输入组件的属性，可以通过该配置透传 | `object` | - |
 | ... | 继承 ProField 的定义,详细可以看[这里](https://procomponents.ant.design/components/field) | `` | - |
@@ -48,4 +53,10 @@ BaseItem 是为了可直接在表单、详情、表格中渲染单项的输入�
 
 ### BaseInfoItem
 
+> ！注意，详情的组件需要直接通过函数式调用，不能使用组件 jsx 调用，参考 demo
+
 > 应用于详情的渲染显示组件，带标签名称和显示组件。
+
+### BaseListItem
+
+> 应用于列表的渲染输入组件，显示内容和编辑输入组件。

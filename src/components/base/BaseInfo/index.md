@@ -34,14 +34,14 @@ BaseInfo 是为了直接通过信息项渲染页面，包含很多预设的展�
 | :-- | :-- | :-- | :-- |
 | mode | 呈现类型 | `'page'` \| `'drawer'` \| `'modal'` | `'page'` |
 | pageProps | 页面配置，关联的 BasePage 的[配置](/components/base-page) | `object` | - |
-| labelWidth | 标签宽度, 支持数值或者字符串px | `string \| number` | `100px` |
-| items | 字段配置，查看[item 定义](/components/base-info#item-表单项定义)， | `{[key:string]: any}[]` | - |
-| datas | 内容数据，键值对对象类型 | `object` | - |
+| labelWidth | 标签宽度, 支持数值或者字符串 px | `string \| number` | `100px` |
+| items | 详情字段配置，查看[item 定义](/components/base-info#item-表单项定义)， | `{[key:string]: any}[]` | - |
+| values | 详情数据值，键值对对象类型 | `object` | - |
 | renderHeader | 自定义头部 | `() => React.ReactNode ` | - |
 | renderFooter | 自定义底部 | `() => React.ReactNode ` | - |
 | ... | 继承 ProDescriptions 的数据展示定义，详细可以看[这里](https://procomponents.ant.design/components/descriptions#prodescriptions) | `` | - |
 
-> 部分 ProDescriptions 的属性定义无效， title、columns均无效
+> 部分 ProDescriptions 的属性定义无效， title、columns 均无效
 
 ### item 项目定义
 

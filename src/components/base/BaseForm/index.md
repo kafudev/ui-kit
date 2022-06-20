@@ -28,15 +28,17 @@ BaseForm 封装了 antd pro 的 ProForm 和 Form 组件。 BasePage 支持 ProFo
 
 | 参数 | 说明 | 类型 | 默认值 |
 | :-- | :-- | :-- | :-- |
+| formRef | 表单引用 | `ref` | - |
 | layout | 表单布局 | `'horizontal'` \| `'vertical'` | `'horizontal'` |
 | rowCol | 行列数，默认呈现一行一列 | `number` | 1 |
 | items | 表单项配置，查看[item 定义](#item-表单项定义)， | `{[key:string]: any}[]` | - |
-| forms | 表单数据，键值对对象类型 | `object` | - |
+| values | 表单数据值，键值对对象类型 | `object` | - |
 | submitTargetId | 提交按钮组挂载目标,可挂载组件节点或者 Id | `Element \| string` | - |
 | globalFixedSubmit | 全局固定提交按钮组 | `{[key:string]: any}[]` | - |
-| changeForms | 表单数据变化方法 | `(changedValues: any, value: any) => void ` | - |
+| onValuesChange | 表单数据变化方法 | `(changedValues: any, value: any) => void ` | - |
 | onSubmit | 提交表单方法 | `(value: any) => void ` | - |
 | onReset | 重置表单方法 | `() => void ` | - |
+| onCancel | 取消表单方法 | `() => void ` | - |
 | ... | 继承 ProForm 的表单属性,详细可以看[这里](https://procomponents.ant.design/components/form#proform) | `` | - |
 
 ### item 表单项定义

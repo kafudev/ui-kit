@@ -55,7 +55,7 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
           unCheckedChildren: item.unCheckedChildren || item.falseText || '',
         };
         if (item.mode == 'read') {
-          return <Switch checked={item?.text} {...item} {...item.fieldProps} disabled={true} />;
+          return <Switch checked={item?.text} {...item.fieldProps} disabled={true} />;
         }
         break;
       case 'radio': // 单选
@@ -81,7 +81,6 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
           options={item?.options}
           valueEnum={item?.valueEnum}
           initialValue={item?.initialValue}
-          {...item}
           request={async () => {
             if (item?.request) {
               // 请求远程下拉数据

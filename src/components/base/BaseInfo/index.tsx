@@ -10,9 +10,9 @@ export interface BaseInfoProps extends ProDescriptionsProps {
   pageProps?: BasePageProps;
   labelWidth?: string | number; // 标签宽度
   items: { [key: string]: any }[]; // 字段配置
-  datas: { [key: string]: any }; // 表单数据
-  initItems?: (value: any) => void; // 初始化字段数据
-  initDatas?: (value: any) => void; // 初始化数据
+  values: { [key: string]: any }; // 详情数据值
+  // initItems?: (value: any) => void; // 初始化字段数据
+  // initDatas?: (value: any) => void; // 初始化数据
   renderHeader?: () => React.ReactNode; // 渲染头部
   renderFooter?: () => React.ReactNode; // 渲染底部
 }
@@ -21,7 +21,7 @@ const LogTag = 'BaseInfo';
 // 格式化项目数据
 const formatItems = (_items: any[], _datas: any, _lists: any[]) => {
   let _nowIndex = 0;
-  for (let index = 0; index < (_items.length || 0); index++) {
+  for (let index = 0; index < (_items?.length || 0); index++) {
     const _item = _items[index];
     _items[index].dataIndex = _item?.name || _item?.dataIndex || _item?.key;
     _items[index].valueType = _item?.type || _item?.valueType;
@@ -73,45 +73,45 @@ const formatItems = (_items: any[], _datas: any, _lists: any[]) => {
 
 const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
   const actionRef = useRef<ActionType>();
-  const [lists, setLists] = React.useState(formatItems(props.items, props.datas, []));
-  const [datas, setDatas] = React.useState(props.datas);
+  const [lists, setLists] = React.useState(formatItems(props.items, props.values, []));
+  const [values, setValues] = React.useState(props.values);
 
   useImperativeHandle(ref, () => ({
     actionRef: actionRef,
     ...actionRef.current,
   }));
 
-  // 初始化字段数据
-  React.useEffect(() => {
-    console.log(LogTag, 'initItems items', props.items);
-    if (props.initItems) {
-      props.initItems(props.items);
-    } else {
-      // todo默认字段数据处理
-    }
+  // // 初始化字段数据
+  // React.useEffect(() => {
+  //   console.log(LogTag, 'initItems items', props.items);
+  //   if (props.initItems) {
+  //     props.initItems(props.items);
+  //   } else {
+  //     // todo默认字段数据处理
+  //   }
 
-    console.log(LogTag, 'initDatas datas', props.datas);
-    if (props.initDatas) {
-      props.initDatas(props.datas);
-    } else {
-      // todo默认表单数据处理
-    }
-  }, []);
+  //   console.log(LogTag, 'initDatas values', props.values);
+  //   if (props.initDatas) {
+  //     props.initDatas(props.values);
+  //   } else {
+  //     // todo默认表单数据处理
+  //   }
+  // }, []);
 
   // 属性值变化数据
   React.useEffect(() => {
     console.log(LogTag, 'propsChange items', props.items);
     if (props.items) {
-      setLists(formatItems(props.items, props.datas, []));
+      setLists(formatItems(props.items, props.values, []));
     }
   }, [props.items]);
 
   React.useEffect(() => {
-    console.log(LogTag, 'propsChange datas', props.datas);
-    if (props.datas) {
-      setDatas(props.datas);
+    console.log(LogTag, 'propsChange values', props.values);
+    if (props.values) {
+      setValues(props.values);
     }
-  }, [props.datas]);
+  }, [props.values]);
 
   // 渲染数据
   const renderDatas = () => {
@@ -129,7 +129,7 @@ const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
                     mode={'read'}
                     label={tt.label}
                     type="header"
-                    data={datas || {}}
+                    data={values || {}}
                     {...tt}
                   />
                 ) : (
@@ -147,7 +147,7 @@ const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
               // }
               editable={props?.editable}
               column={props?.column || 3}
-              dataSource={datas}
+              dataSource={values}
               columns={[]}
             >
               {(tt.items || []).map((item: Record<string, any>, index: number) => {
@@ -163,7 +163,7 @@ const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
                 // 返回渲染组件
                 return RenderInfoItem({
                   type: item.type,
-                  data: datas,
+                  data: values,
                   ...item,
                   mode: 'read',
                 });

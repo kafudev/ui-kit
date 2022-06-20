@@ -2,7 +2,7 @@ import React from 'react';
 import { BaseInfo, BaseInfoProps } from '@kafudev/ui-kit';
 
 const Page: React.FC<BaseInfoProps> = (props) => {
-  const [datas] = React.useState<any>({
+  const [values] = React.useState<any>({
     title: 'cccc',
     place: 'shop_banner',
     image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -42,7 +42,7 @@ const Page: React.FC<BaseInfoProps> = (props) => {
       label: '标题',
       name: 'title',
       type: 'input',
-      copy: true
+      copy: true,
     },
     {
       label: '位置',
@@ -94,7 +94,7 @@ const Page: React.FC<BaseInfoProps> = (props) => {
     },
   ]);
 
-  return <BaseInfo mode={props.mode} column={3} items={items} datas={datas} />;
+  return <BaseInfo mode={props.mode} column={3} items={items} values={values} />;
 };
 
 export default Page;

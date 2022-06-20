@@ -2,7 +2,7 @@ import React from 'react';
 import { BaseInfo, BaseInfoProps } from '@kafudev/ui-kit';
 
 const Page: React.FC<BaseInfoProps> = (props) => {
-  const [datas, setDatas] = React.useState<any>({
+  const [values, setValues] = React.useState<any>({
     title: 'cccc',
     place: 'shop_banner',
     image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -128,11 +128,11 @@ const Page: React.FC<BaseInfoProps> = (props) => {
       mode={props.mode}
       column={3}
       items={items}
-      datas={datas}
+      values={values}
       editable={{
         onSave: async (keypath: any, newInfo: any, oriInfo: any) => {
           console.log('editable onSave', keypath, newInfo, oriInfo);
-          setDatas(newInfo);
+          setValues(newInfo);
           return true;
         },
       }}

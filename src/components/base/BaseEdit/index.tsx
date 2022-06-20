@@ -1,5 +1,5 @@
 import type { PropsWithChildren, ReactNode } from 'react';
-import React, {useImperativeHandle} from 'react';
+import React, { useImperativeHandle } from 'react';
 import BasePage, { BasePageProps } from '../BasePage';
 import BaseForm, { BaseFormProps } from '../BaseForm';
 import { FormInstance, message } from 'antd';
@@ -9,9 +9,13 @@ export interface BaseEditProps extends BaseFormProps {
   mode?: 'page' | 'drawer' | 'modal'; // 呈现类型
   action: 'add' | 'edit' | 'view'; // 操作类型
   pageProps?: BasePageProps;
-  layout: 'horizontal' | 'vertical' | 'inline'; // 表单布局
-  initItems?: (value: any) => void; // 初始化表单项
-  initForms?: (value: any) => void; // 初始化表单数据
+  layout?: 'horizontal' | 'vertical' | 'inline'; // 表单布局
+  // initItems?: (value: any) => void; // 初始化表单项
+  // initForms?: (value: any) => void; // 初始化表单数据
+  onValuesChange?: (changedValues: any, value: any) => void; // 表单项数据变化
+  onSubmit?: (formData: Record<string, any>) => Promise<boolean | void>; // 提交表单
+  onCancel?: () => void; // 取消表单
+  onReset?: () => void; // 重置表单
   renderHeader?: () => React.ReactNode; // 渲染头部
   renderFooter?: () => React.ReactNode; // 渲染底部
 }
@@ -72,11 +76,11 @@ const BaseEdit: React.FC<BaseEditProps> = React.forwardRef((props, ref) => {
 
   // // 表单数据变化
   // React.useEffect(() => {
-  //   console.log(LogTag, 'changeForms forms', forms);
+  //   console.log(LogTag, 'onValuesChange forms', forms);
   //   // todo默认数据数据处理
 
-  //   if (props.changeForms) {
-  //     props.changeForms(forms);
+  //   if (props.onValuesChange) {
+  //     props.onValuesChange(forms);
   //   }
   // }, [forms]);
 
@@ -95,22 +99,30 @@ const BaseEdit: React.FC<BaseEditProps> = React.forwardRef((props, ref) => {
   const onValuesChange = (changedValues: any, values: any) => {
     if (changedValues) {
       console.log(LogTag, 'onValuesChange:', changedValues, values);
-      if (props.changeForms) {
-        props.changeForms(changedValues, values);
+      if (props.onValuesChange) {
+        props.onValuesChange(changedValues, values);
       }
     }
   };
 
   // 渲染表单
-  const renderForms = () => {
-    return <BaseForm ref={formRef} onSubmit={onSubmit} changeForms={onValuesChange} {...props} layout={layout} />;
+  const renderForm = () => {
+    return (
+      <BaseForm
+        ref={formRef}
+        onSubmit={onSubmit}
+        onValuesChange={onValuesChange}
+        {...props}
+        layout={layout}
+      />
+    );
   };
 
   return (
     <BasePage mode={props.mode} {...props?.pageProps}>
       <>
         {props.renderHeader && props.renderHeader()}
-        {renderForms()}
+        {renderForm()}
         {props.children}
         {props.renderFooter && props.renderFooter()}
       </>

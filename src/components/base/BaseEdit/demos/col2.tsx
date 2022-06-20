@@ -2,7 +2,7 @@ import React from 'react';
 import { BaseEdit, BaseEditProps } from '@kafudev/ui-kit';
 
 const Page: React.FC<BaseEditProps> = (props) => {
-  const [forms, setForms] = React.useState<any>({
+  const [values] = React.useState<any>({
     title: '标题',
     place: 'shop_banner',
     // switch: false,
@@ -55,7 +55,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
       action={props.action || props?.location?.query?.action}
       rowCol={2}
       items={items}
-      forms={forms}
+      values={values}
       onSubmit={onSubmit}
     />
   );

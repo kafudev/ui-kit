@@ -4,7 +4,7 @@ import RenderFormItem from '../RenderFormItem';
 
 export type Props = {
   items: { [key: string]: any }[]; // 表格列配置
-  forms: { [key: string]: any }; // 表单数据
+  values: { [key: string]: any }; // 表单数据
   width?: string | number; // 表格宽度
   rowCol?: number; // 行列数 默认为1
 };
@@ -19,7 +19,7 @@ const FormBody: React.FC<Props> = (props) => {
       return RenderFormItem({
         mode: 'edit',
         type: item.type,
-        data: props.forms,
+        data: props.values,
         ...item,
       });
     });
@@ -54,7 +54,7 @@ const FormBody: React.FC<Props> = (props) => {
   React.useEffect(() => {
     const ll: any[] = getItemList();
     setItemList(ll);
-  }, [props.forms, props.items, props.rowCol]);
+  }, [props.values, props.items, props.rowCol]);
 
   return (
     <>

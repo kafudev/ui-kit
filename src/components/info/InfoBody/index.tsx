@@ -3,7 +3,7 @@ import RenderInfoItem from '../RenderInfoItem';
 
 export type Props = {
   items: { [key: string]: any }[]; // 表格列配置
-  datas: { [key: string]: any }; // 表单数据
+  values: { [key: string]: any }; // 表单数据
   labelWidth?: string | number; // 表格宽度
 };
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,7 +16,7 @@ const InfoBody: React.FC<Props> = (props) => {
         return RenderInfoItem({
           mode: 'read',
           type: item.type,
-          data: props.datas,
+          data: props.values,
           ...item,
         });
       })}

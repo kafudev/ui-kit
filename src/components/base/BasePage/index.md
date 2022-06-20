@@ -14,10 +14,10 @@ nav:
 
 BasePage 是为了减少繁杂的面包屑配置和标题，保持项目内的页面保持一致，可以适应多种排版布局。
 
-BasePage 封装了 antd pro 的 PageContainer 组件。 BasePage 支持 PageContainer 和PageHeader 的所有属性。
+BasePage 封装了 antd pro 的 PageContainer 组件。 BasePage 支持 PageContainer 和 PageHeader 的所有属性。
 
 ```tsx | pure
-<BasePage 
+<BasePage
   content="欢迎使用 BasePage 组件"
   title="这是页面标题"
   extra={[
@@ -50,19 +50,17 @@ BasePage 封装了 antd pro 的 PageContainer 组件。 BasePage 支持 PageCont
 
 <code src="./demos/water.tsx" iframe="400" title="页面水印" desc="通过 `waterMarkProps` 设置标题栏扩展按钮" />
 
-### 关闭Card
+### 关闭 Card
 
 <code src="./demos/nocard.tsx" iframe="200" title="关闭Card" desc="通过 `cardProps` 设置false不显示内部card" />
 
-
-### 显示Card
+### 显示 Card
 
 <code src="./demos/card.tsx" iframe="300" title="显示Card" desc="通过 `cardProps` 设置内部card属性" />
 
-
 ## API
 
-> 继承PageContainer的定义，详细可以看[这里](https://procomponents.ant.design/components/page-container)。
+> 继承 PageContainer 的定义，详细可以看[这里](https://procomponents.ant.design/components/page-container)。
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -70,7 +68,8 @@ BasePage 封装了 antd pro 的 PageContainer 组件。 BasePage 支持 PageCont
 | title | 页面标题 | ReactNode | - |
 | extra | 标题栏扩展按钮 | ReactNode | - |
 | content | 内容区 | ReactNode | - |
-| cardProps | 页面内部默认card配置，设置为false，则不渲染ProCard，关联的ProCard的[配置](https://procomponents.ant.design/components/card#api) | `object \| boolean` | - |
+| cardProps | 页面内部默认 card 配置，设置为 false，则不渲染 ProCard，关联的 ProCard 的[配置](https://procomponents.ant.design/components/card#api) | `object \| boolean` | - |
+| backTopProps | 页面 BackTop 向上配置，设置为 false，则不渲染 BackTop，关联的 BackTop 的[配置](https://ant.design/components/back-top-cn/#API) | `object \| boolean` | - |
 | header | [PageHeader](https://ant.design/components/page-header-cn/) 的所有属性 | `PageHeaderProps` | - |
 | waterMarkProps | 配置水印，Layout 会透传给 PageContainer，但是以 PageContainer 的配置优先 | [WaterMarkProps](https://procomponents.ant.design/components/water-mark) | - |
-| ... | 继承PageContainer的定义,详细可以看[这里](https://procomponents.ant.design/components/page-container) | `` | - |
+| ... | 继承 PageContainer 的定义,详细可以看[这里](https://procomponents.ant.design/components/page-container) | `` | - |

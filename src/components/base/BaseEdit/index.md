@@ -47,12 +47,13 @@ BaseEdit 是为了减少复杂的表单编辑页面，通过表单项直接生�
 | mode | 呈现类型 | `'page'` \| `'drawer'` \| `'modal'` | `'page'` |
 | pageProps | 页面配置，关联的 BasePage 的[配置](/components/base-page) | `object` | - |
 | layout | 表单布局 | `'horizontal'` \| `'vertical'` | `'horizontal'` |
-| rowCol | 行列数，默认呈现一行一列 | `number` | 1 |
+| rowCol | 行列数，默认呈现一行一列 | `1`\|`2` | 1 |
 | items | 表单项配置，查看[item 定义](/components/base-form#item-表单项定义)， | `{[key:string]: any}[]` | - |
-| forms | 表单数据，键值对对象类型 | `object` | - |
-| changeForms | 表单数据变化方法 | `(changedValues: any, value: any) => void ` | - |
+| values | 表单数据值，键值对对象类型 | `object` | - |
+| onValuesChange | 表单数据变化方法 | `(changedValues: any, value: any) => void ` | - |
 | onSubmit | 提交表单方法 | `(value: any) => void ` | - |
 | onReset | 重置表单方法 | `() => void ` | - |
+| onCancel | 取消表单方法 | `() => void ` | - |
 | renderHeader | 自定义头部 | `() => React.ReactNode ` | - |
 | renderFooter | 自定义底部 | `() => React.ReactNode ` | - |
 | ... | 继承 BaseForm 的表单定义，详细可以看[这里](/components/base-form) | `` | - |

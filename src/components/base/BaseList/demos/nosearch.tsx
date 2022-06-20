@@ -122,42 +122,7 @@ const Page: React.FC<BaseListProps> = (props) => {
     { label: '批量删除', icon: 'DeleteOutlined', type: 'button', danger: true },
     { label: '批量导出', icon: 'ToTopOutlined', type: 'button', buttonType: 'primary' },
   ]);
-  const [filters] = React.useState<any[]>([
-    { label: '标题', tooltip: '最长为 24 位，用于标定的唯一 id', name: 'title', type: 'input' },
-    { label: '进度', name: 'progress', type: 'digit' },
-    {
-      label: '位置',
-      name: 'place',
-      type: 'select',
-      options: [
-        { label: '首页轮播', value: 'home_banner' },
-        { label: '商城轮播', value: 'shop_banner' },
-      ],
-      valueEnum: {
-        home_banner: {
-          text: '首页轮播',
-        },
-        shop_banner: {
-          text: '商城轮播',
-        },
-      },
-    },
-    {
-      label: '状态',
-      name: 'status',
-      type: 'select',
-      valueEnum: {
-        0: {
-          text: '关闭',
-          status: 'Error',
-        },
-        1: {
-          text: '开启',
-          status: 'Success',
-        },
-      },
-    },
-  ]);
+  const [filters] = React.useState<any[]>([]);
   const [columns] = React.useState<any[]>([
     { label: '序号', name: 'index', type: 'indexBorder' },
     { label: 'ID', name: 'id', align: 'center' },
@@ -179,7 +144,7 @@ const Page: React.FC<BaseListProps> = (props) => {
       },
     },
     { label: '进度', name: 'progress', type: 'digit' },
-    { title: '创建时间', align: 'center', name: 'createdAt' },
+    { label: '创建时间', align: 'center', name: 'createdAt' },
     {
       label: '操作',
       align: 'center',

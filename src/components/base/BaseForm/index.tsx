@@ -8,26 +8,26 @@ import ProForm from '@ant-design/pro-form';
 import ReactDOM from 'react-dom';
 
 export interface BaseFormProps extends ProFormProps, PropsWithoutRef<any> {
-  layout: 'horizontal' | 'vertical' | 'inline'; // 表单布局
+  layout?: 'horizontal' | 'vertical' | 'inline'; // 表单布局
   items: { [key: string]: any }[]; // 表格列配置
-  forms: { [key: string]: any }; // 表单数据
-  width?: string | number; // 表格宽度
+  values: { [key: string]: any }; // 数据值
+  // width?: string | number; // 表格宽度
   rowCol?: number; // 行列数 默认为1
   globalFixedSubmit?: boolean; // 全局固定提交按钮组
   submitTargetId?: Element | string; // 提交按钮挂载目标
-  changeForms?: (changedValues: any, value: any) => void; // 表单数据变化
+  onValuesChange?: (changedValues: any, value: any) => void; // 表单项数据变化
   onSubmit?: (formData: Record<string, any>) => Promise<boolean | void>; // 提交表单
-  onCancel?: () => void; // 取消表单
   onReset?: () => void; // 重置表单
+  onCancel?: () => void; // 取消表单
 }
 const LogTag = 'BaseForm';
 
 // 格式化表单数据
 const formatValues = (_items: any[], _forms: any) => {
-  for (let index = 0; index < (_items.length || 0); index++) {
+  for (let index = 0; index < (_items?.length || 0); index++) {
     const _item = _items[index];
-    _items[index].dataIndex = _item?.name || _item?.dataIndex || _item?.key;
-    _items[index].valueType = _item?.type || _item?.valueType;
+    _items[index].dataIndex = _item?.dataIndex || _item?.name || _item?.key;
+    _items[index].valueType = _item?.valueType || _item?.type;
     switch (_items[index].valueType) {
       // 表单-对象
       case 'form':
@@ -60,10 +60,10 @@ const formatValues = (_items: any[], _forms: any) => {
 
 // 反格式化表单数据
 const backFormatValues = (_items: any[], _forms: any) => {
-  for (let index = 0; index < (_items.length || 0); index++) {
+  for (let index = 0; index < (_items?.length || 0); index++) {
     const _item = _items[index];
-    _items[index].dataIndex = _item?.name || _item?.dataIndex || _item?.key;
-    _items[index].valueType = _item?.type || _item?.valueType;
+    _items[index].dataIndex = _item?.dataIndex || _item?.name || _item?.key;
+    _items[index].valueType = _item?.valueType || _item?.type;
     switch (_items[index].valueType) {
       // 表单-对象
       case 'form':
@@ -93,32 +93,33 @@ const backFormatValues = (_items: any[], _forms: any) => {
 };
 
 const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
-  const [forms, setForms] = React.useState(formatValues(props.items, props.forms));
+  const [values, setValues] = React.useState(formatValues(props.items, props.values));
 
   // 绑定一个 ProFormInstance 实例
   const formRef = React.useRef<ProFormInstance<any>>();
 
   useImperativeHandle(ref, () => ({
+    formRef: formRef,
     ...formRef.current,
   }));
 
   React.useEffect(() => {
-    if (props.forms) {
+    if (props.values) {
       // 格式化数据
-      const newForms = formatValues(props.items, props.forms);
-      setForms(newForms);
+      const newForms = formatValues(props.items, props.values);
+      setValues(newForms);
       formRef?.current?.setFieldsValue(newForms);
-      console.log(LogTag, 'formatValues Forms', props.forms, newForms);
+      console.log(LogTag, 'formatValues Forms', props.values, newForms);
     }
-  }, [props.forms]);
+  }, [props.values]);
 
   return (
     <ProForm
       formRef={formRef}
-      labelCol={props?.labelCol || { span: props.layout === 'vertical'?24: 4 }}
-      wrapperCol={props?.wrapperCol || { span: props.layout === 'vertical'?24: 16 }}
+      labelCol={props?.labelCol || { span: props.layout === 'vertical' ? 24 : 4 }}
+      wrapperCol={props?.wrapperCol || { span: props.layout === 'vertical' ? 24 : 16 }}
       initialValues={{
-        ...forms,
+        ...values,
       }}
       onInit={(form: any) => {
         console.log(LogTag, 'onInit', form);
@@ -131,7 +132,7 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
           const forms = await props.request(params, props);
           return forms;
         }
-        return await forms;
+        return await values;
       }}
       {...props}
       submitter={{
@@ -175,6 +176,7 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
             return [...dom.reverse()];
           }
         },
+        ...props.submitter,
       }}
       onFinish={async (values: any) => {
         // 验证数据后返回
@@ -191,15 +193,14 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
         }
       }}
       onValuesChange={async (changedValues: any, values: any) => {
-        // console.log(LogTag, 'onValuesChange', changedValues, values);
-        if (props?.onValuesChange) {
-          await props.onValuesChange(changedValues, values);
-        } else if (props?.changeForms) {
-          await props.changeForms(changedValues, values);
+        console.log(LogTag, 'onValuesChange', changedValues, values);
+        if (props.onValuesChange) {
+          props.onValuesChange(changedValues, values);
+          return;
         }
       }}
     >
-      <FormBody rowCol={props.rowCol} items={props.items} forms={props.forms} />
+      <FormBody rowCol={props.rowCol} items={props.items} values={props.values} />
     </ProForm>
   );
 });
