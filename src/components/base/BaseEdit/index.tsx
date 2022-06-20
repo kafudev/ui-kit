@@ -15,7 +15,6 @@ export interface BaseEditProps extends BaseFormProps {
   onValuesChange?: (changedValues: any, value: any) => void; // 表单项数据变化
   onSubmit?: (formData: Record<string, any>) => Promise<boolean | void>; // 提交表单
   onCancel?: () => void; // 取消表单
-  onReset?: () => void; // 重置表单
   renderHeader?: () => React.ReactNode; // 渲染头部
   renderFooter?: () => React.ReactNode; // 渲染底部
 }
@@ -26,28 +25,28 @@ const BaseEdit: React.FC<BaseEditProps> = React.forwardRef((props, ref) => {
     props.layout || 'horizontal',
   );
   const [items, setItems] = React.useState(props.items);
-  const [forms, setForms] = React.useState(props.forms);
+  const [values, setValues] = React.useState(props.values);
 
   useImperativeHandle(ref, () => ({
     ...formRef.current,
   }));
 
-  // 初始化数据
-  React.useEffect(() => {
-    console.log(LogTag, 'initItems items', props.items);
-    if (props.initItems) {
-      props.initItems(props.items);
-    } else {
-      // todo默认字段数据处理
-    }
+  // // 初始化数据
+  // React.useEffect(() => {
+  //   console.log(LogTag, 'initItems items', props.items);
+  //   if (props.initItems) {
+  //     props.initItems(props.items);
+  //   } else {
+  //     // todo默认字段数据处理
+  //   }
 
-    console.log(LogTag, 'initForms forms', props.forms);
-    if (props.initForms) {
-      props.initForms(props.forms);
-    } else {
-      // todo默认表单数据处理
-    }
-  }, []);
+  //   console.log(LogTag, 'initForms forms', props.forms);
+  //   if (props.initForms) {
+  //     props.initForms(props.forms);
+  //   } else {
+  //     // todo默认表单数据处理
+  //   }
+  // }, []);
 
   // 属性值变化数据
   React.useEffect(() => {
@@ -58,11 +57,11 @@ const BaseEdit: React.FC<BaseEditProps> = React.forwardRef((props, ref) => {
   }, [props.items]);
 
   React.useEffect(() => {
-    console.log(LogTag, 'propsChange forms', props.forms);
-    if (props.forms) {
-      setForms(props.forms);
+    console.log(LogTag, 'propsChange values', props.values);
+    if (props.values) {
+      setValues(props.values);
     }
-  }, [props.forms]);
+  }, [props.values]);
 
   // // 字段数据变化
   // React.useEffect(() => {
@@ -88,9 +87,9 @@ const BaseEdit: React.FC<BaseEditProps> = React.forwardRef((props, ref) => {
   const onSubmit = async (values: any) => {
     console.log(LogTag, 'onSubmit:', values);
     if (props.onSubmit) {
-      props.onSubmit(forms);
+      props.onSubmit(values);
     } else {
-      // todo通用提交方法
+      // 通用提交方法
       message.success('提交成功');
     }
   };
@@ -113,6 +112,8 @@ const BaseEdit: React.FC<BaseEditProps> = React.forwardRef((props, ref) => {
         onSubmit={onSubmit}
         onValuesChange={onValuesChange}
         {...props}
+        items={items}
+        values={values}
         layout={layout}
       />
     );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BaseEdit, BaseEditProps } from '@kafudev/ui-kit';
+import { findIndexItems } from '@kafudev/ui-kit';
 
 const Page: React.FC<BaseEditProps> = (props) => {
   const [values, setValues] = React.useState<any>({
@@ -7,7 +8,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
     place: 'shop_banner',
     image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
     // type: 'horizontal',
-    // switch: false,
+    status: true,
   });
   const [items, setItems] = React.useState<any>([
     { label: '基本信息', desc: '表单的基本信息', type: 'header' },
@@ -30,7 +31,6 @@ const Page: React.FC<BaseEditProps> = (props) => {
       name: 'image',
       type: 'image',
       placeholder: '',
-      disabled: true,
     },
     {
       label: '位置',
@@ -69,12 +69,36 @@ const Page: React.FC<BaseEditProps> = (props) => {
     console.log('Page onSubmit:', values);
   };
 
+  // 表单字段变化
+  const onValuesChange = (changedValues: any, values: any) => {
+    console.log('onValuesChange:', changedValues, values);
+    for (const key in changedValues) {
+      if (Object.prototype.hasOwnProperty.call(changedValues, key)) {
+        const value = changedValues[key];
+        switch (key) {
+          case 'status':
+            if (value == true) {
+              items[findIndexItems('image', items)].mode = 'edit';
+              setItems([...items]);
+            } else {
+              items[findIndexItems('image', items)].mode = 'read';
+              setItems([...items]);
+            }
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  };
+
   return (
     <BaseEdit
       action={props.action || props?.location?.query?.action}
       items={items}
       values={values}
       onSubmit={onSubmit}
+      onValuesChange={onValuesChange}
       layout={'horizontal'}
     />
   );

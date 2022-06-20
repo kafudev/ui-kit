@@ -4,7 +4,7 @@ import { RenderItemProps } from '../RenderItem';
 
 export interface ItemImageProps extends RenderItemProps {}
 const ItemImage = (props: ItemImageProps) => {
-  return <ProField mode={props?.mode} valueType="image" />;
+  return <ProField {...props} mode={props?.mode} valueType="image" text={props.text} />;
 };
 
 export default ItemImage;

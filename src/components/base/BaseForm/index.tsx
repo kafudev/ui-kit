@@ -18,7 +18,6 @@ export interface BaseFormProps extends ProFormProps, PropsWithoutRef<any> {
   onValuesChange?: (changedValues: any, value: any) => void; // 表单项数据变化
   onSubmit?: (formData: Record<string, any>) => Promise<boolean | void>; // 提交表单
   onReset?: () => void; // 重置表单
-  onCancel?: () => void; // 取消表单
 }
 const LogTag = 'BaseForm';
 
@@ -200,7 +199,7 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
         }
       }}
     >
-      <FormBody rowCol={props.rowCol} items={props.items} values={props.values} />
+      <FormBody rowCol={props.rowCol} items={props.items} values={values} />
     </ProForm>
   );
 });
