@@ -15,7 +15,7 @@ const ItemHeader = (props: ItemHeaderProps) => {
       style={{
         borderLeft: '3px',
         borderLeftStyle: 'solid',
-        borderLeftColor: props.borderColor || '#bbb',
+        borderLeftColor: props.borderColor || '#1890ff',
         overflow: 'hidden',
         marginBottom: props.marginBottom || '2px',
         marginTop: props.marginTop || '10px',

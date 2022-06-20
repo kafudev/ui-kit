@@ -6,7 +6,7 @@ import { FormInstance, message } from 'antd';
 // import styles from './index.less';
 
 export interface BaseEditProps extends BaseFormProps {
-  mode?: 'page' | 'drawer' | 'modal'; // 呈现类型
+  mode?: 'page' | 'drawer' | 'modal' | 'card'; // 呈现类型
   action: 'add' | 'edit' | 'view'; // 操作类型
   pageProps?: BasePageProps;
   layout?: 'horizontal' | 'vertical' | 'inline'; // 表单布局

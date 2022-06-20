@@ -11,7 +11,7 @@ const LogTag = 'InfoBody';
 const InfoBody: React.FC<Props> = (props) => {
   return (
     <>
-      {props.items.map((item, index) => {
+      {props?.items?.map((item, index) => {
         // 渲染表单组件
         return RenderInfoItem({
           mode: 'read',

@@ -1,6 +1,7 @@
 import ProCard from '@ant-design/pro-card';
 import ProDescriptions from '@ant-design/pro-descriptions/es';
 import { BaseInfoItem, BaseItemProps } from '@kafudev/ui-kit';
+import { Row } from 'antd';
 import React from 'react';
 export default (props: BaseItemProps) => (
   <ProCard>
@@ -17,6 +18,11 @@ export default (props: BaseItemProps) => (
       }}
       columns={[]}
     >
+      {BaseInfoItem({
+        label: '头部栏目',
+        type: 'header',
+        span: 3,
+      })}
       {BaseInfoItem({
         label: '输入',
         mode: 'read',

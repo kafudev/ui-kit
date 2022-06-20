@@ -5,6 +5,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
   const [values, setValues] = React.useState<any>({
     title: '标题',
     place: 'shop_banner',
+    image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
     // type: 'horizontal',
     // switch: false,
   });
@@ -22,6 +23,13 @@ const Page: React.FC<BaseEditProps> = (props) => {
       name: 'stitle',
       type: 'input',
       placeholder: '请输入副标题',
+      disabled: true,
+    },
+    {
+      label: '封面图',
+      name: 'image',
+      type: 'image',
+      placeholder: '',
       disabled: true,
     },
     {

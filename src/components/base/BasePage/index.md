@@ -64,7 +64,7 @@ BasePage 封装了 antd pro 的 PageContainer 组件。 BasePage 支持 PageCont
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| mode | 呈现类型 | `'page'` \| `'drawer'` \| `'modal'` | `'page'` |
+| mode | 呈现类型 | `'page'` \| `'drawer'` \| `'modal'` \| `'card'` | `'page'` |
 | title | 页面标题 | ReactNode | - |
 | extra | 标题栏扩展按钮 | ReactNode | - |
 | content | 内容区 | ReactNode | - |

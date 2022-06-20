@@ -1,5 +1,6 @@
 import ProCard from '@ant-design/pro-card';
 import ProForm, { ProFormGroup, ProFormList } from '@ant-design/pro-form';
+import { Row } from 'antd';
 import React from 'react';
 import { BaseItemProps } from '../../base';
 import RenderItem from '../../field/RenderItem';
@@ -26,14 +27,19 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
     switch (valueType) {
       case 'header': // !表单头部
         return (
-          <RenderItem
-            key={key}
-            {...item}
-            type={valueType}
-            valueType={valueType}
-            marginBottom={'10px'}
-            mode={item.mode || 'edit'}
-          />
+          <>
+            {/* @ts-ignore */}
+            <Row span={item?.span}>
+              <RenderItem
+                key={key}
+                {...item}
+                type={valueType}
+                valueType={valueType}
+                marginBottom={'10px'}
+                mode={item.mode || 'edit'}
+              />
+            </Row>
+          </>
         );
       case 'group': // !表单组合-字段
         return (

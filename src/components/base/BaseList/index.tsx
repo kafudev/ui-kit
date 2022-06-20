@@ -11,7 +11,7 @@ import BaseIcon from '../BaseIcon';
 import BasePage, { BasePageProps } from '../BasePage';
 
 export interface BaseListProps extends PropsWithChildren<any> {
-  mode?: 'page' | 'drawer' | 'modal'; // 呈现类型
+  mode?: 'page' | 'drawer' | 'modal' | 'card'; // 呈现类型
   table: {
     mname?: string;
     key?: string;

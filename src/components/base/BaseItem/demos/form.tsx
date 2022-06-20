@@ -5,6 +5,9 @@ import React from 'react';
 export default (props: BaseItemProps) => (
   <ProCard>
     <Row>
+      <BaseFormItem label={'头部栏目'} type={'header'} />
+    </Row>
+    <Row>
       <Space>
         <BaseFormItem mode={'edit'} label={'输入'} type={'input'} {...props} />
         <BaseFormItem
@@ -24,6 +27,9 @@ export default (props: BaseItemProps) => (
       </Space>
     </Row>
     <br />
+    <Row>
+      <BaseFormItem label={'日期栏目'} type={'header'} />
+    </Row>
     <Row>
       <Space>
         <BaseFormItem mode={'edit'} label={'开关'} type={'switch'} {...props} />

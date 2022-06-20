@@ -5,7 +5,7 @@ import React, { ReactNode } from 'react';
 // import styles from './index.less';
 
 export interface BasePageProps extends PageContainerProps {
-  mode?: 'page' | 'drawer' | 'modal'; // 页面呈现类型
+  mode?: 'page' | 'drawer' | 'modal' | 'card'; // 页面呈现类型
   title?: string | ReactNode; // 页面标题
   extra?: ReactNode | string; // 标题栏扩展按钮
   cardProps?: boolean | ProCardProps; // 内部card属性

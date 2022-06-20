@@ -1,4 +1,5 @@
 import ProDescriptions from '@ant-design/pro-descriptions/es/index';
+import { Row } from 'antd';
 import React from 'react';
 import { BaseItemProps } from '../../base';
 import RenderItem from '../../field/RenderItem';
@@ -18,15 +19,28 @@ const RenderInfoItem: React.FC<BaseInfoItemProps> = (props) => {
     switch (valueType) {
       case 'header': // !项目头部
         return (
-          <RenderItem
-            key={key}
-            {...item}
-            type={valueType}
-            valueType={valueType}
-            marginBottom={'0px'}
-            mode={item?.mode || 'read'}
-          />
+          <>
+            {/* @ts-ignore */}
+            <Row span={item?.span}>
+              <RenderItem
+                key={key}
+                {...item}
+                type={valueType}
+                valueType={valueType}
+                marginBottom={'0px'}
+                mode={item?.mode || 'read'}
+              />
+            </Row>
+          </>
         );
+      // 表单-对象
+      case 'form':
+      case 'object':
+        return null;
+      // 列表-数组
+      case 'list':
+      case 'array':
+        return null;
       case 'empty':
       case 'black':
         return null;
@@ -50,6 +64,7 @@ const RenderInfoItem: React.FC<BaseInfoItemProps> = (props) => {
             display: 'inline-block',
             ...item.labelStyle,
           }}
+          span={item?.span}
           contentStyle={{ ...item?.contentStyle }}
           editable={item?.edit || item.editable}
           copyable={item?.copy || item.copyable}

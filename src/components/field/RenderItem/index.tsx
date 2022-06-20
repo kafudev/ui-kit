@@ -3,6 +3,11 @@ import { Switch } from 'antd';
 import React, { PropsWithChildren } from 'react';
 // 自定义组件
 import ItemHeader from '../ItemHeader';
+import ItemImage from '../ItemImage';
+import ItemGallery from '../ItemGallery';
+import ItemVideo from '../ItemVideo';
+import ItemUpload from '../ItemUpload';
+import ItemMap from '../ItemMap';
 
 export interface RenderItemProps extends PropsWithChildren<any>, ProFieldPropsType {
   mode: 'edit' | 'read' | 'update';
@@ -37,9 +42,15 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
         return <ItemHeader mode={item?.mode} {...item} />;
       // 以下自定义组件
       case 'image': // 图片
-        return <ProField mode={item?.mode} valueType="image" {...item} />;
+        return <ItemImage mode={item?.mode} {...item} />;
       case 'gallery': // 图集
-        return <div>{'暂未实现'}</div>;
+        return <ItemGallery mode={item?.mode} {...item} />;
+      case 'video': // 视频
+        return <ItemVideo mode={item?.mode} {...item} />;
+      case 'upload': // 上传
+        return <ItemUpload mode={item?.mode} {...item} />;
+      case 'map': // 地图
+        return <ItemMap mode={item?.mode} {...item} />;
       // 以下是原有普通组件，可以直接使用，增加修改部分数据
       case 'input':
       case 'string':
@@ -81,6 +92,10 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
           options={item?.options}
           valueEnum={item?.valueEnum}
           initialValue={item?.initialValue}
+          text={item?.text}
+          onChange={item?.onChange}
+          visible={item?.visible}
+          {...item}
           request={async () => {
             if (item?.request) {
               // 请求远程下拉数据

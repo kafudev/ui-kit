@@ -1,12 +1,13 @@
 import ProDescriptions, { ProDescriptionsProps } from '@ant-design/pro-descriptions/es/index';
 import { ActionType } from '@ant-design/pro-table';
+import { Row } from 'antd';
 import React, { useRef, useImperativeHandle } from 'react';
 import RenderInfoItem from '../../info/RenderInfoItem';
 import BasePage, { BasePageProps } from '../BasePage';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 export interface BaseInfoProps extends ProDescriptionsProps {
-  mode?: 'page' | 'drawer' | 'modal'; // 呈现类型
+  mode?: 'page' | 'drawer' | 'modal' | 'card'; // 呈现类型
   pageProps?: BasePageProps;
   labelWidth?: string | number; // 标签宽度
   items: { [key: string]: any }[]; // 字段配置
@@ -19,39 +20,12 @@ export interface BaseInfoProps extends ProDescriptionsProps {
 const LogTag = 'BaseInfo';
 
 // 格式化项目数据
-const formatItems = (_items: any[], _datas: any, _lists: any[]) => {
-  let _nowIndex = 0;
+const formatItems = (_items: any[], _datas: any) => {
   for (let index = 0; index < (_items?.length || 0); index++) {
     const _item = _items[index];
-    _items[index].dataIndex = _item?.name || _item?.dataIndex || _item?.key;
-    _items[index].valueType = _item?.type || _item?.valueType;
-    if (index === 0) {
-      _nowIndex = 0;
-      const tt: any = {};
-      tt.label = '';
-      tt.desc = '';
-      tt.type = 'header';
-      tt.valueType = 'header';
-      tt.items = [];
-      _lists.push(tt);
-    }
+    _items[index].dataIndex = _item?.dataIndex || _item?.name || _item?.key;
+    _items[index].valueType = _item?.valueType || _item?.type;
     switch (_items[index].valueType) {
-      // 头部-标题
-      case 'header':
-        // !转换成标题
-        if (index === 0) {
-          _nowIndex = 0;
-          const tt: any = _item;
-          tt.items = [];
-          _lists[_nowIndex] = tt;
-        } else {
-          // 创建新的标题
-          _nowIndex++;
-          const tt: any = _item;
-          tt.items = [];
-          _lists.push(tt);
-        }
-        break;
       // 表单-对象
       case 'form':
       case 'object':
@@ -63,17 +37,16 @@ const formatItems = (_items: any[], _datas: any, _lists: any[]) => {
         // todo 转换成数组
         break;
       default:
-        _lists[_nowIndex].items.push(_item);
         break;
     }
   }
-  console.log('formatItems', _lists);
-  return _lists;
+  console.log('formatItems', _items);
+  return _items;
 };
 
 const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
   const actionRef = useRef<ActionType>();
-  const [lists, setLists] = React.useState(formatItems(props.items, props.values, []));
+  const [items, setItems] = React.useState(formatItems(props.items, props.values));
   const [values, setValues] = React.useState(props.values);
 
   useImperativeHandle(ref, () => ({
@@ -102,7 +75,7 @@ const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
   React.useEffect(() => {
     console.log(LogTag, 'propsChange items', props.items);
     if (props.items) {
-      setLists(formatItems(props.items, props.values, []));
+      setItems(formatItems(props.items, props.values));
     }
   }, [props.items]);
 
@@ -114,64 +87,29 @@ const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
   }, [props.values]);
 
   // 渲染数据
-  const renderDatas = () => {
+  const renderData = () => {
     return (
-      <>
-        {(lists || []).map((tt: Record<string, any>, ii: number) => {
-          return (
-            <ProDescriptions
-              actionRef={actionRef}
-              key={ii}
-              {...props}
-              title={
-                (tt.items || []).length > 0 ? (
-                  <RenderInfoItem
-                    mode={'read'}
-                    label={tt.label}
-                    type="header"
-                    data={values || {}}
-                    {...tt}
-                  />
-                ) : (
-                  <></>
-                )
-              }
-              layout={props.layout || 'horizontal'}
-              // title={
-              //   <InfoBody
-              //     items={
-              //       (tt.items || []).length > 0 ? [{ label: tt.label, type: 'header', ...tt }] : []
-              //     }
-              //     datas={{}}
-              //   />
-              // }
-              editable={props?.editable}
-              column={props?.column || 3}
-              dataSource={values}
-              columns={[]}
-            >
-              {(tt.items || []).map((item: Record<string, any>, index: number) => {
-                if (
-                  item.type == 'header' ||
-                  item.valueType == 'header' ||
-                  item.type == 'empty' ||
-                  item.valueType == 'empty'
-                ) {
-                  return <ProDescriptions.Item label="" editable={false}></ProDescriptions.Item>;
-                }
-
-                // 返回渲染组件
-                return RenderInfoItem({
-                  type: item.type,
-                  data: values,
-                  ...item,
-                  mode: 'read',
-                });
-              })}
-            </ProDescriptions>
-          );
+      <ProDescriptions
+        actionRef={actionRef}
+        {...props}
+        layout={props.layout || 'horizontal'}
+        editable={props?.editable}
+        column={props?.column || 3}
+        dataSource={values}
+        columns={[]}
+      >
+        {(items || []).map((item: Record<string, any>, index: number) => {
+          // 返回渲染组件
+          return RenderInfoItem({
+            type: item.type,
+            data: values,
+            // header组件占用一行
+            span: item.type == 'header' || item.valueType == 'header' ? props?.column || 3 : 1,
+            ...item,
+            mode: 'read',
+          });
         })}
-      </>
+      </ProDescriptions>
     );
   };
 
@@ -179,7 +117,7 @@ const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
     <BasePage mode={props.mode} {...props?.pageProps}>
       <>
         {props.renderHeader && props.renderHeader()}
-        {renderDatas()}
+        {renderData()}
         {props.children}
         {props.renderFooter && props.renderFooter()}
       </>
