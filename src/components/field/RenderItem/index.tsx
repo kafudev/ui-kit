@@ -95,6 +95,7 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
           text={item?.text}
           onChange={item?.onChange}
           visible={item?.visible}
+          rules={item?.rules}
           {...item}
           request={async () => {
             if (item?.request) {

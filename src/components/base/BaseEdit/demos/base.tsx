@@ -31,6 +31,23 @@ const Page: React.FC<BaseEditProps> = (props) => {
       name: 'image',
       type: 'image',
       placeholder: '',
+      rules: [{ required: true, trigger: 'blur' }],
+    },
+    {
+      label: '拖拽',
+      name: 'image2',
+      type: 'image',
+      uploadType: 'dragger',
+      placeholder: '',
+      rules: [{ required: true, trigger: 'blur' }],
+    },
+    {
+      label: '图集',
+      name: 'gallery',
+      type: 'gallery',
+      max: 5,
+      placeholder: '',
+      rules: [{ required: true, trigger: 'blur' }],
     },
     {
       label: '位置',
@@ -79,9 +96,17 @@ const Page: React.FC<BaseEditProps> = (props) => {
           case 'status':
             if (value == true) {
               items[findIndexItems('image', items)].mode = 'edit';
+              items[findIndexItems('gallery', items)].mode = 'edit';
+              items[findIndexItems('gallery', items)].fieldProps = {
+                disabled: false,
+              };
               setItems([...items]);
             } else {
-              items[findIndexItems('image', items)].mode = 'read';
+              // items[findIndexItems('image', items)].mode = 'read';
+              // items[findIndexItems('gallery', items)].mode = 'read';
+              items[findIndexItems('gallery', items)].fieldProps = {
+                disabled: true,
+              };
               setItems([...items]);
             }
             break;

@@ -17,6 +17,7 @@ const FormBody: React.FC<Props> = (props) => {
     const ll = props.items.map((item, index) => {
       // 渲染表单组件
       return RenderFormItem({
+        key: index,
         mode: 'edit',
         type: item.type,
         data: props.values,

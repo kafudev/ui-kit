@@ -6,6 +6,7 @@ import { BaseItemProps } from '../../base';
 import RenderItem from '../../field/RenderItem';
 
 export interface BaseFormItemProps extends BaseItemProps {
+  itemProps: { [key: string]: any }; // 表单项配置
   data: { [key: string]: any }; // 表单值配置
   width?: string | number | any; // 表格标签宽度
 }
@@ -29,7 +30,7 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
         return (
           <>
             {/* @ts-ignore */}
-            <Row span={item?.span}>
+            <Row span={item?.span} key={key}>
               <RenderItem
                 key={key}
                 {...item}
@@ -49,7 +50,7 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
             colon={item?.label == '' ? false : true}
             {...item}
           >
-            <ProFormGroup key="key">
+            <ProFormGroup>
               {item.items.map((tt: any, ii: number) => {
                 return _renderItem(tt, data, ii);
               })}
@@ -112,7 +113,7 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
               );
             }}
           >
-            <ProFormGroup key="key">
+            <ProFormGroup>
               {item.items.map((tt: any, ii: number) => {
                 return _renderItem(tt, data?.[item?.name], ii);
               })}
@@ -144,7 +145,7 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
               }
             }}
           >
-            <ProFormGroup key="key">
+            <ProFormGroup>
               {item.items?.map((tt: any, ii: number) => {
                 return _renderItem(tt, data?.[item?.name], ii);
               })}
@@ -161,10 +162,16 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
       <>
         <ProForm.Item
           key={key}
-          extra={item?.desc || ''}
+          extra={item?.extra || item?.desc || ''}
           name={item?.name}
           label={item?.label}
+          labelAlign={item?.labelAlign}
+          labelCol={item?.labelCol}
           tooltip={item?.tooltip}
+          noStyle={item?.noStyle}
+          rules={item?.rules}
+          colon={item?.colon}
+          {...item?.itemProps}
         >
           <RenderItem
             key={key}

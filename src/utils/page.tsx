@@ -70,7 +70,10 @@ const RenderDrawer: React.FC<DrawerPr> = React.forwardRef((props, ref) => {
  * @param drawerProps 侧栏属性
  * @return 返回引用ref，可以调用close方法关闭
  */
-export function showDrawer(dom: ReactNode, drawerProps: DrawerProps): React.RefObject<CommonRefObj> {
+export function showDrawer(
+  dom: ReactNode,
+  drawerProps: DrawerProps,
+): React.RefObject<CommonRefObj> {
   const ref = React.createRef<any>();
   const id = new Date().getTime();
   const node = document.createElement('div');
@@ -154,12 +157,11 @@ const RenderModal: React.FC<ModalPr> = React.forwardRef((props, ref) => {
       destroyOnClose={true}
       title={props?.title || ''}
       width={props?.width || 720}
-      bodyStyle={
-        props?.bodyStyle || {
-          maxHeight: window.innerHeight / 1.5 + 'px',
-          overflowY: 'auto',
-        }
-      }
+      bodyStyle={{
+        maxHeight: window.innerHeight / 1.5 + 'px',
+        overflowY: 'auto',
+        ...props?.bodyStyle,
+      }}
       centered={true}
       onCancel={(e) => {
         setVisible(false);

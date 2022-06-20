@@ -5,7 +5,8 @@ import { BaseItemProps } from '../../base';
 import RenderItem from '../../field/RenderItem';
 
 export interface BaseInfoItemProps extends BaseItemProps {
-  data: { [key: string]: any }; // 表单值配置
+  itemProps: { [key: string]: any }; // 详情项配置
+  data: { [key: string]: any }; // 详情值配置
   labelWidth?: string | number; // 标签宽度
 }
 
@@ -69,6 +70,7 @@ const RenderInfoItem: React.FC<BaseInfoItemProps> = (props) => {
           editable={item?.edit || item.editable}
           copyable={item?.copy || item.copyable}
           dataIndex={item?.name || item.dataIndex}
+          {...item?.itemProps}
           render={(text: any, entity: any, index: number, action: any, schema: any) => {
             // console.log('render', text, entity, index, action, schema);
             return <RenderItem key={key} {...item} type={valueType} text={text} mode={'read'} />;
