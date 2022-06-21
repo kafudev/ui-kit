@@ -107,6 +107,9 @@ const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
             span: item.type == 'header' || item.valueType == 'header' ? props?.column || 3 : 1,
             ...item,
             mode: 'read',
+            itemProps: {
+              ...item?.itemProps,
+            },
           });
         })}
       </ProDescriptions>

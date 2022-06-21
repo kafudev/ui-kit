@@ -22,6 +22,9 @@ const FormBody: React.FC<Props> = (props) => {
         type: item.type,
         data: props.values,
         ...item,
+        itemProps: {
+          ...item?.itemProps,
+        },
       });
     });
     const _ll = [];
