@@ -36,8 +36,42 @@ const ItemVideo = (props: ItemVideoProps) => {
     );
   };
 
+  const render = (_text: any, _props: ProFieldFCRenderProps) => {
+    console.log('ItemVideo render', _text, _props);
+    return (
+      <ItemUpload
+        type={'upload'}
+        uploadType={props.uploadType || 'card'}
+        mode={'read'}
+        disabled={true}
+        readonly={true}
+        value={_text}
+        maxCount={props?.max || 1}
+        rules={props.rules}
+        onChange={props.onChange}
+        icon={'VideoCameraOutlined'}
+        fieldProps={{
+          maxCount: props?.max || 1,
+          multiple: props?.max > 1 ? true : false,
+          listType:
+            props.uploadType == 'dragger' || props.uploadType == 'button'
+              ? 'picture'
+              : 'picture-card',
+          accept: 'video/mp4, video/x-mpeg2, video/quicktime, video/x-msvideo',
+          ...props.fieldProps,
+        }}
+      />
+    );
+  };
+
   return (
-    <ProField {...props} mode={props?.mode} renderFormItem={renderFormItem} text={props.text} />
+    <ProField
+      {...props}
+      mode={props?.mode}
+      renderFormItem={renderFormItem}
+      render={render}
+      text={props.text}
+    />
   );
 };
 

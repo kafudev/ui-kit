@@ -195,6 +195,7 @@ const ItemUpload = (props: ItemUploadProps) => {
   const toDownload = (url: string, name: string) => {
     const a = document.createElement('a');
     a.setAttribute('href', url);
+    a.setAttribute('target', '_blank');
     a.setAttribute('download', name);
     a.click();
   };
@@ -222,21 +223,17 @@ const ItemUpload = (props: ItemUploadProps) => {
     }
     let url = file.url || (file.preview as string);
     let name = file.name || url!.substring(url!.lastIndexOf('/') + 1);
+    let ext = name.substring(name.lastIndexOf('.') + 1);
     // 判断文件格式是否是图片或者视频
-    if (
-      !file?.type ||
-      ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'video/mp4'].indexOf(
-        file?.type as string,
-      ) === -1
-    ) {
+    if (!ext || ['png', 'jpg', 'jpeg', 'gif', 'mp4'].indexOf(ext) === -1) {
       window.open(url);
       return;
     }
     const renderBox = () => {
       // 视频预览
-      if (file?.type && ['video/mp4'].indexOf(file?.type as string) > -1) {
+      if (file?.type && ['mp4'].indexOf(ext) > -1) {
         return (
-          <div>
+          <div style={{ width: '100%', height: '100%' }}>
             <video
               src={url}
               controls
@@ -247,7 +244,7 @@ const ItemUpload = (props: ItemUploadProps) => {
       }
       // 图片预览
       return (
-        <div>
+        <div style={{ width: '100%', height: '100%' }}>
           <img
             src={url}
             alt={name}
@@ -287,14 +284,14 @@ const ItemUpload = (props: ItemUploadProps) => {
           新窗口查看
         </Button>,
       ],
-      bodyStyle: { height: window.innerHeight / 1.5 + 'px', overflow: 'auto' },
+      bodyStyle: { height: document.body.clientHeight / 1.5 + 'px', overflow: 'auto' },
     });
   };
 
   const previewFile = async (file: UploadFile) => {
-    if (file.status === 'done') {
-      onPreview(file);
-    }
+    // if (file.status === 'done') {
+    //   onPreview(file);
+    // }
   };
 
   return props.uploadType === 'dragger' ? (
@@ -315,11 +312,11 @@ const ItemUpload = (props: ItemUploadProps) => {
       onChange={onChange}
       onDownload={onDownload}
       onPreview={onPreview}
-      // previewFile={previewFile}
+      previewFile={previewFile}
       beforeUpload={beforeUpload}
       fileList={fileList}
     >
-      {fileList.length >= props?.maxCount ? null : (
+      {fileList.length >= props?.maxCount || props.mode == 'read' ? null : (
         <>
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
@@ -343,11 +340,11 @@ const ItemUpload = (props: ItemUploadProps) => {
       onChange={onChange}
       onDownload={onDownload}
       onPreview={onPreview}
-      // previewFile={previewFile}
+      previewFile={previewFile}
       beforeUpload={beforeUpload}
       fileList={fileList}
     >
-      {fileList.length >= props?.maxCount ? null : (
+      {fileList.length >= props?.maxCount || props.mode == 'read' ? null : (
         <>
           <div>
             <BaseIcon name={props?.icon || 'FileAddOutlined'} style={{ fontSize: 28 }} />
@@ -370,11 +367,11 @@ const ItemUpload = (props: ItemUploadProps) => {
       onChange={onChange}
       onDownload={onDownload}
       onPreview={onPreview}
-      // previewFile={previewFile}
+      previewFile={previewFile}
       beforeUpload={beforeUpload}
       fileList={fileList}
     >
-      {fileList.length >= props?.maxCount ? null : (
+      {fileList.length >= props?.maxCount || props.mode == 'read' ? null : (
         <Button icon={<UploadOutlined />}>点击上传</Button>
       )}
     </Upload>

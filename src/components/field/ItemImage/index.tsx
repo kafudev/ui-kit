@@ -12,7 +12,7 @@ export interface ItemImageProps extends RenderItemProps {
 }
 const ItemImage = (props: ItemImageProps) => {
   const renderFormItem = (_text: any, _props: ProFieldFCRenderProps, _dom: JSX.Element) => {
-    console.log('ItemImage renderFormItem', _text, _props);
+    // console.log('ItemImage renderFormItem', _text, _props);
     return (
       <ItemUpload
         type={'upload'}
@@ -35,9 +35,41 @@ const ItemImage = (props: ItemImageProps) => {
       />
     );
   };
+  const render = (_text: any, _props: ProFieldFCRenderProps) => {
+    console.log('ItemImage render', _text, _props);
+    return (
+      <ItemUpload
+        type={'upload'}
+        uploadType={props.uploadType || 'card'}
+        mode={'read'}
+        disabled={true}
+        readonly={true}
+        value={_text}
+        maxCount={props?.max || 1}
+        rules={props.rules}
+        icon={'FileImageOutlined'}
+        fieldProps={{
+          maxCount: props?.max || 1,
+          multiple: props?.max > 1 ? true : false,
+          listType:
+            props.uploadType == 'dragger' || props.uploadType == 'button'
+              ? 'picture'
+              : 'picture-card',
+          accept: 'image/png, image/jpeg, image/jpg, image/gif',
+          ...props.fieldProps,
+        }}
+      />
+    );
+  };
 
   return (
-    <ProField {...props} mode={props?.mode} renderFormItem={renderFormItem} text={props.text} />
+    <ProField
+      {...props}
+      mode={props?.mode}
+      renderFormItem={renderFormItem}
+      render={render}
+      text={props.text}
+    />
   );
 };
 

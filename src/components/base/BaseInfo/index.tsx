@@ -100,17 +100,19 @@ const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
       >
         {(items || []).map((item: Record<string, any>, index: number) => {
           // 返回渲染组件
-          return RenderInfoItem({
-            type: item.type,
-            data: values,
-            // header组件占用一行
-            span: item.type == 'header' || item.valueType == 'header' ? props?.column || 3 : 1,
-            ...item,
-            mode: 'read',
-            itemProps: {
-              ...item?.itemProps,
-            },
-          });
+          return [
+            RenderInfoItem({
+              type: item.type,
+              data: values,
+              // header组件占用一行
+              span: item.type == 'header' || item.valueType == 'header' ? props?.column || 3 : 1,
+              ...item,
+              mode: 'read',
+              itemProps: {
+                ...item?.itemProps,
+              },
+            }),
+          ];
         })}
       </ProDescriptions>
     );

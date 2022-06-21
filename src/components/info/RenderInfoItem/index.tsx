@@ -43,6 +43,7 @@ const RenderInfoItem: React.FC<BaseInfoItemProps> = (props) => {
       case 'array':
         return null;
       case 'empty':
+        return <div></div>;
       case 'black':
         return null;
     }

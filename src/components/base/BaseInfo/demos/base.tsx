@@ -65,6 +65,7 @@ const Page: React.FC<BaseInfoProps> = (props) => {
       type: 'textarea',
       fieldProps: { maxLength: 100 },
     },
+    { label: 'empty', type: 'empty' },
     { label: '列表信息', desc: '', type: 'header', borderColor: '#f60' },
     { label: '列表类型', name: 'listtype', type: 'switch' },
     {

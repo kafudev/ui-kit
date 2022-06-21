@@ -6,6 +6,8 @@ const Page: React.FC<BaseInfoProps> = (props) => {
     title: 'cccc',
     place: 'shop_banner',
     image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    gallery:
+      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png,https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
     form: {
       form2: 'xxxxb222',
     },
@@ -47,6 +49,17 @@ const Page: React.FC<BaseInfoProps> = (props) => {
       copy: true,
     },
     {
+      label: '封面图',
+      name: 'image',
+      type: 'image',
+    },
+    {
+      label: '图集',
+      name: 'gallery',
+      type: 'image',
+      max: 5,
+    },
+    {
       label: '位置',
       name: 'place',
       type: 'select',
@@ -56,19 +69,20 @@ const Page: React.FC<BaseInfoProps> = (props) => {
       ],
     },
     {
-      label: '状态',
-      name: 'status',
-      type: 'switch',
-      trueText: '开启',
-      falseText: '关闭',
-    },
-    {
       label: '内容',
       name: 'content',
       type: 'textarea',
       span: 2,
       fieldProps: { maxLength: 100 },
       // editable: false
+    },
+    {
+      label: '状态',
+      name: 'status',
+      type: 'switch',
+      span: 3,
+      trueText: '开启',
+      falseText: '关闭',
     },
     { label: '日期信息', type: 'header' },
     {
