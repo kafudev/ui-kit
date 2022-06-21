@@ -6,27 +6,30 @@ import { ProFieldFCRenderProps } from '@ant-design/pro-utils';
 import { Upload } from 'antd';
 import ItemUpload from '../ItemUpload';
 
-export interface ItemImageProps extends RenderItemProps {
+export interface ItemDocumentProps extends RenderItemProps {
   uploadType: 'card' | 'button' | 'dragger';
   onChange?: (value: any, info: any) => void;
 }
-const ItemImage = (props: ItemImageProps) => {
+const ItemDocument = (props: ItemDocumentProps) => {
   const renderFormItem = (_text: any, _props: ProFieldFCRenderProps, _dom: JSX.Element) => {
-    console.log('ItemImage renderFormItem', _text, _props);
+    console.log('ItemDocument renderFormItem', _text, _props);
     return (
       <ItemUpload
         type={'upload'}
-        uploadType={props.uploadType || 'card'}
+        uploadType={props.uploadType || 'button'}
         mode={'edit'}
         maxCount={props?.max || 1}
         rules={props.rules}
         onChange={props.onChange}
-        icon={'FileImageOutlined'}
+        icon={'FileTextOutlined'}
         fieldProps={{
           maxCount: props?.max || 1,
           multiple: props?.max > 1 ? true : false,
-          listType: props.uploadType == 'dragger' ? 'picture' : 'picture-card',
-          accept: 'image/png, image/jpeg, image/gif',
+          listType: 'picture',
+          accept: '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt',
+          showUploadList: {
+            showPreviewIcon: false,
+          },
           ...props.fieldProps,
         }}
       />
@@ -38,4 +41,4 @@ const ItemImage = (props: ItemImageProps) => {
   );
 };
 
-export default ItemImage;
+export default ItemDocument;

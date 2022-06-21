@@ -7,7 +7,7 @@ nav:
   path: /components
 ---
 
-## ItemGallery 图集组件
+## ItemVideo 视频组件
 
 Demo:
 

@@ -4,8 +4,8 @@ import React, { PropsWithChildren } from 'react';
 // 自定义组件
 import ItemHeader from '../ItemHeader';
 import ItemImage from '../ItemImage';
-import ItemGallery from '../ItemGallery';
 import ItemVideo from '../ItemVideo';
+import ItemDocument from '../ItemDocument';
 import ItemUpload from '../ItemUpload';
 import ItemMap from '../ItemMap';
 
@@ -44,9 +44,18 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
       case 'image': // 图片
         return <ItemImage mode={item?.mode} {...item} />;
       case 'gallery': // 图集
-        return <ItemGallery mode={item?.mode} {...item} />;
+        return (
+          <ItemImage
+            mode={item?.mode}
+            {...item}
+            max={item?.max || null}
+            fieldProps={{ maxCount: item?.max || null, multiple: true, ...item.fieldProps }}
+          />
+        );
       case 'video': // 视频
         return <ItemVideo mode={item?.mode} {...item} />;
+      case 'document': // 文档
+        return <ItemDocument mode={item?.mode} {...item} />;
       case 'upload': // 上传
         return <ItemUpload mode={item?.mode} {...item} />;
       case 'map': // 地图
