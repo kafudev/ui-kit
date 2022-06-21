@@ -115,8 +115,8 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
   return (
     <ProForm
       formRef={formRef}
-      labelCol={props?.labelCol || { span: props.layout === 'vertical' ? 24 : 4 }}
-      wrapperCol={props?.wrapperCol || { span: props.layout === 'vertical' ? 24 : 16 }}
+      labelCol={props?.labelCol || { span: props.layout === 'vertical' ? 24 : 6 }}
+      wrapperCol={props?.wrapperCol || { span: props.layout === 'vertical' ? 24 : 18 }}
       initialValues={{
         ...values,
       }}
