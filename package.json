@@ -57,7 +57,11 @@
   "peerDependencies": {
     "react": "^16.12.0 || ^17.0.0 || ^18.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "ahooks": "^3.5.0",
+    "umi": "^3.5.26",
+    "umi-request": "^1.4.0"
+  },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-card": "^1.20.10",
@@ -85,7 +89,6 @@
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "release-it": "^15.0.0",
-    "umi": "^3.5.26",
     "yorkie": "^2.0.0"
   }
 }

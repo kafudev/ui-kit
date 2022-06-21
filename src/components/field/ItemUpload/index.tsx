@@ -1,24 +1,25 @@
 import React from 'react';
-import ProField, { ProFieldPropsType } from '@ant-design/pro-field/es/index';
 import { RenderItemProps } from '../RenderItem';
-import { ProFieldFCRenderProps } from '@ant-design/pro-utils';
-import { Button, Upload } from 'antd';
+import { Button, Upload, message } from 'antd';
 import { nanoid } from '@ant-design/pro-utils';
-import { ProFormUploadButton, ProFormUploadDragger } from '@ant-design/pro-form';
 import page from '../../../utils/page';
 import { RcFile } from 'antd/lib/upload';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { FileAddOutlined, InboxOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import Dragger from 'antd/lib/upload/Dragger';
+import request from 'umi-request';
 import BaseIcon from '../../base/BaseIcon';
 
 export interface ItemUploadProps extends RenderItemProps {
   uploadType: 'card' | 'button' | 'dragger';
   onChange?: (value: any, info: any) => void;
-  request?: (options: any) => Promise<any>;
+  actionUrl?: string; // 请求链接
+  onResult?: (object: any) => Promise<{ url: string; name?: string }>; // 请求结果处理
+  onUpload?: (file: RcFile) => Promise<{ url: string; name?: string }>;
 }
 const LogTag = 'ItemUpload';
 const ItemUpload = (props: ItemUploadProps) => {
+  const [action, setAction] = React.useState<string>(props.action || '');
   const [fileList, setFileList] = React.useState<UploadFile[]>([]);
 
   const getBase64 = (file: RcFile): Promise<string> =>
@@ -52,24 +53,137 @@ const ItemUpload = (props: ItemUploadProps) => {
     }
   }, []);
 
-  const onChange = (info: any) => {
+  const beforeUpload = async (file: RcFile, _fileList: RcFile[]) => {
+    console.log('beforeUpload', file, fileList);
+    if (props?.beforeUpload) {
+      let res = await props.beforeUpload(file, [...fileList]);
+      return res;
+    }
+    return false;
+  };
+
+  const onChange = async (info: any) => {
     console.log('onChange', info);
-    // if (file.status === 'uploading') {
+    let file = info.file;
+    let fileList = info.fileList;
+    if (!file.status) {
+      file.status = 'uploading';
+    }
+    fileList = fileList.map((_file: any) => {
+      if (!_file.status) {
+        _file.status = 'uploading';
+      }
+      return _file;
+    });
+    setFileList([...fileList]);
+    await onFileUpload(file, fileList);
+    // if (file?.status === 'uploading') {
     //   props?.onChange(file);
     // }
     // if (file.status === 'error') {
-    //   props?.onChange(info.file);
+    //   props?.onChange(file);
     // }
-    if (info?.file?.status === 'done' || info?.file?.status === 'removed') {
+    // if (file.status === 'removed') {
+    //   props?.onChange(file);
+    // }
+    if (file?.status === 'done' || file.status === 'removed') {
       // 返回文件地址，多文件拼接
-      const _value = info?.fileList?.map((file: any) => file.url).join(',');
-      console.log('onChange _value', _value);
+      const _value = fileList
+        ?.map((_file: any) => {
+          if (_file.status === 'done') {
+            if (_file.url) {
+              return _file.url;
+            }
+          }
+        })
+        .join(',');
       if (props?.onChange) {
-        props?.onChange(_value, info);
+        props?.onChange(_value, { file, fileList, event: info.event });
       }
     }
+
     // always setState
-    setFileList([...info?.fileList]);
+    // console.log('onChange setFileList', fileList);
+    // setFileList([...fileList]);
+    return file;
+  };
+
+  // 上传文件列表
+  const onFileUpload = async (file: UploadFile, fileList: UploadFile[]) => {
+    console.log('onFileUpload 1', file, fileList);
+    if (file?.status === 'uploading') {
+      let url = await onUpload(file?.originFileObj || file);
+      if (url) {
+        // @ts-ignore
+        file.url = url;
+        file.status = 'done';
+      } else {
+        file.status = 'error';
+      }
+    }
+    fileList = fileList.map((_file: any) => {
+      if (_file.uid === file.uid) {
+        _file.url = file.url;
+        _file.status = file.status;
+      }
+      if (!_file.status) {
+        _file.status = 'uploading';
+      }
+      return _file;
+    });
+    console.log('onFileUpload 2', file, fileList);
+    setFileList([...fileList]);
+    return fileList;
+  };
+
+  // 本地上传
+  const onUpload = async (file: any) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      if (props?.onUpload) {
+        let res = await props.onUpload(file);
+        // 上传成功
+        let url = res?.url;
+        console.log('onUpload url', url);
+        return url;
+      }
+      let action = '/admin/sys/common/upload';
+      action = '/admin/api/upload/uploadImage';
+      // action = '/admin/api/upload/uploadVideo';
+      // action = '/admin/api/upload/uploadDocument';
+      if (props?.actionUrl) {
+        action = props.actionUrl;
+      }
+      let res: any = await request<any>(action, {
+        method: 'POST',
+        headers: {
+          // Accept: '*/*',
+          // 'Content-Type': 'multipart/form-data',
+        },
+        data: formData,
+        skipErrorHandler: true,
+      });
+      if (props?.onResult) {
+        res = await props.onResult(res);
+        // 上传成功
+        let url = res?.url;
+        console.log('onUpload url', url);
+        return url;
+      }
+      if (res.code == 1) {
+        // 上传成功
+        let url = res?.data?.url;
+        console.log('onUpload url', url);
+        return url;
+      } else {
+        message.error(res.message || res.msg || '上传失败');
+        return false;
+      }
+    } catch (error: any) {
+      message.error(error.message || error.msg || '上传异常');
+      return false;
+    }
   };
 
   // 下载文件
@@ -103,63 +217,79 @@ const ItemUpload = (props: ItemUploadProps) => {
     }
     let url = file.url || (file.preview as string);
     let name = file.name || url!.substring(url!.lastIndexOf('/') + 1);
-    let modelRef = page.showModal(
-      <img style={{ width: '100%', height: '100%', objectFit: 'contain' }} src={url} />,
-      {
-        title: name,
-        footer: [
-          <Button
-            key="back"
-            onClick={() => {
-              page.closeModal(modelRef);
-            }}
-          >
-            关闭
-          </Button>,
-          <Button
-            key="download"
-            type="primary"
-            onClick={() => {
-              toDownload(url, name);
-            }}
-          >
-            下载
-          </Button>,
-          <Button
-            key="link"
-            type="primary"
-            onClick={() => {
-              window.open(url);
-            }}
-          >
-            新窗口查看
-          </Button>,
-        ],
-        bodyStyle: { height: window.innerHeight / 1.5 + 'px', overflow: 'auto' },
-      },
-    );
+    // 判断文件格式是否是图片或者视频
+    if (
+      !file?.type ||
+      ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'video/mp4'].indexOf(
+        file?.type as string,
+      ) === -1
+    ) {
+      window.open(url);
+      return;
+    }
+    const renderBox = () => {
+      // 视频预览
+      if (file?.type && ['video/mp4'].indexOf(file?.type as string) > -1) {
+        return (
+          <div>
+            <video
+              src={url}
+              controls
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            />
+          </div>
+        );
+      }
+      // 图片预览
+      return (
+        <div>
+          <img
+            src={url}
+            alt={name}
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          />
+        </div>
+      );
+    };
+    // 弹窗预览图片
+    let modelRef = page.showModal(renderBox(), {
+      title: name,
+      footer: [
+        <Button
+          key="back"
+          onClick={() => {
+            page.closeModal(modelRef);
+          }}
+        >
+          关闭
+        </Button>,
+        <Button
+          key="download"
+          type="primary"
+          onClick={() => {
+            toDownload(url, name);
+          }}
+        >
+          下载
+        </Button>,
+        <Button
+          key="link"
+          type="primary"
+          onClick={() => {
+            window.open(url);
+          }}
+        >
+          新窗口查看
+        </Button>,
+      ],
+      bodyStyle: { height: window.innerHeight / 1.5 + 'px', overflow: 'auto' },
+    });
   };
 
   const previewFile = async (file: UploadFile) => {
     if (file.status === 'done') {
       onPreview(file);
     }
-  };
-
-  const beforeUpload = async (file: UploadFile, fileList: UploadFile[]) => {
-    let url = '';
-    if (props?.onUpload) {
-      let res = await props.onUpload(file, fileList);
-      url = res?.url;
-    }
-    if (props?.beforeUpload) {
-      let res = await props.beforeUpload(file, fileList);
-      url = res?.url;
-    }
-    // !todo实现默认上传
-    // @ts-ignore
-    file.url = url;
-    return file;
   };
 
   return props.uploadType === 'dragger' ? (
