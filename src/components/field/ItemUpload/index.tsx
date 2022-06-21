@@ -68,10 +68,12 @@ const ItemUpload = (props: ItemUploadProps) => {
     let fileList = info.fileList;
     if (!file.status) {
       file.status = 'uploading';
+      file.percent = 50;
     }
     fileList = fileList.map((_file: any) => {
       if (!_file.status) {
         _file.status = 'uploading';
+        _file.percent = 50;
       }
       return _file;
     });
@@ -117,6 +119,7 @@ const ItemUpload = (props: ItemUploadProps) => {
         // @ts-ignore
         file.url = url;
         file.status = 'done';
+        file.percent = 100;
       } else {
         file.status = 'error';
       }
@@ -125,9 +128,11 @@ const ItemUpload = (props: ItemUploadProps) => {
       if (_file.uid === file.uid) {
         _file.url = file.url;
         _file.status = file.status;
+        _file.percent = file.percent;
       }
       if (!_file.status) {
         _file.status = 'uploading';
+        _file.percent = 50;
       }
       return _file;
     });

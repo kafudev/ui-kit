@@ -25,8 +25,11 @@ const ItemImage = (props: ItemImageProps) => {
         fieldProps={{
           maxCount: props?.max || 1,
           multiple: props?.max > 1 ? true : false,
-          listType: props.uploadType == 'dragger' ? 'picture' : 'picture-card',
-          accept: 'image/png, image/jpeg, image/gif',
+          listType:
+            props.uploadType == 'dragger' || props.uploadType == 'button'
+              ? 'picture'
+              : 'picture-card',
+          accept: 'image/png, image/jpeg, image/jpg, image/gif',
           ...props.fieldProps,
         }}
       />

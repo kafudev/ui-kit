@@ -1,4 +1,3 @@
-export { default as Foo } from './Foo';
 export { default as BasePage } from './components/base/BasePage';
 export { default as BaseList } from './components/base/BaseList';
 export { default as BaseEdit } from './components/base/BaseEdit';

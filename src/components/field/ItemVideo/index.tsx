@@ -25,8 +25,11 @@ const ItemVideo = (props: ItemVideoProps) => {
         fieldProps={{
           maxCount: props?.max || 1,
           multiple: props?.max > 1 ? true : false,
-          listType: props.uploadType == 'dragger' ? 'picture' : 'picture-card',
-          accept: 'video/mp4',
+          listType:
+            props.uploadType == 'dragger' || props.uploadType == 'button'
+              ? 'picture'
+              : 'picture-card',
+          accept: 'video/mp4, video/x-mpeg2, video/quicktime, video/x-msvideo',
           ...props.fieldProps,
         }}
       />

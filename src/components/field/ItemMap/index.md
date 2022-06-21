@@ -1,4 +1,5 @@
 ---
+order: 50
 group:
   title: 原子组件
   path: /field
