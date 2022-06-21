@@ -9,6 +9,7 @@ import { FileAddOutlined, InboxOutlined, PlusOutlined, UploadOutlined } from '@a
 import Dragger from 'antd/lib/upload/Dragger';
 import request from 'umi-request';
 import BaseIcon from '../../base/BaseIcon';
+import 'antd/es/upload/style/index.css';
 
 export interface ItemUploadProps extends RenderItemProps {
   uploadType: 'card' | 'button' | 'dragger';

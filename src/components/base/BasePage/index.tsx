@@ -20,7 +20,6 @@ const BasePage: React.FC<BasePageProps> = (props) => {
     <>
       {mode === 'page' ? (
         <PageContainer
-          // className={styles.page}
           {...props}
           header={{
             title: props.title,
