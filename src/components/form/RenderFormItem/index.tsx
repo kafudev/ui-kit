@@ -23,8 +23,10 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
     if (React.isValidElement(item)) {
       return item;
     }
+    // !设置默认属性
+    let dataIndex = item?.dataIndex || item?.name || item?.key || '';
     // 渲染不同类型的组件
-    const valueType = item?.type || item?.valueType || '';
+    const valueType = item?.type || item?.valueType || 'text';
     switch (valueType) {
       case 'header': // !表单头部
         return (
@@ -34,7 +36,6 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
               <RenderItem
                 key={key}
                 {...item}
-                type={valueType}
                 valueType={valueType}
                 marginBottom={'10px'}
                 mode={item.mode || 'edit'}
@@ -175,10 +176,10 @@ const RenderFormItem: React.FC<BaseFormItemProps> = (props) => {
         >
           <RenderItem
             key={key}
-            text={data?.[item?.name]}
+            text={data?.[dataIndex]}
+            dataIndex={dataIndex}
             {...item}
             mode={item.mode || 'edit'}
-            type={valueType}
             valueType={valueType}
           />
         </ProForm.Item>

@@ -35,7 +35,7 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
       return item;
     }
     // !渲染不同类型的组件
-    const valueType = item.type || item.valueType || '';
+    const valueType = item.valueType || item.type || 'text';
     item.valueType = valueType;
     switch (valueType) {
       case 'header': // !表单头部
@@ -64,15 +64,26 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
       case 'input':
       case 'string':
       case 'text': // 输入框
-        item.type = 'input';
-        item.valueType = 'input';
+        item.valueType = 'text';
         break;
       case 'switch': // 开关
+        let trueText =
+          item.checkedChildren ||
+          item.trueText ||
+          item?.fieldProps?.checkedChildren ||
+          item?.fieldProps?.trueText ||
+          '';
+        let falseText =
+          item.unCheckedChildren ||
+          item.falseText ||
+          item?.fieldProps?.unCheckedChildren ||
+          item?.fieldProps?.falseText ||
+          '';
         item.valuePropName = 'checked';
         item.fieldProps = {
+          checkedChildren: trueText || '',
+          unCheckedChildren: falseText || '',
           ...item.fieldProps,
-          checkedChildren: item.checkedChildren || item.trueText || '',
-          unCheckedChildren: item.unCheckedChildren || item.falseText || '',
         };
         if (item.mode == 'read') {
           return <Switch checked={item?.text} {...item.fieldProps} disabled={true} />;

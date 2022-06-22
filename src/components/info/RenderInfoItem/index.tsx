@@ -15,8 +15,10 @@ const LogTag = 'RenderInfoItem';
 const RenderInfoItem: React.FC<BaseInfoItemProps> = (props) => {
   // 渲染表单组件
   const _renderItem = (item: BaseInfoItemProps, data: any, key: number) => {
+    // !设置默认属性
+    let dataIndex = item?.dataIndex || item?.name || item?.key || 'text';
     // 渲染不同类型的组件
-    const valueType = item?.valueType || item?.type || '';
+    const valueType = item?.valueType || 'text';
     switch (valueType) {
       case 'header': // !项目头部
         return (
@@ -70,18 +72,34 @@ const RenderInfoItem: React.FC<BaseInfoItemProps> = (props) => {
           contentStyle={{ ...item?.contentStyle }}
           editable={item?.edit || item.editable}
           copyable={item?.copy || item.copyable}
-          dataIndex={item?.name || item.dataIndex}
+          dataIndex={dataIndex}
           {...item?.itemProps}
           render={(text: any, entity: any, index: number, action: any, schema: any) => {
             // console.log('render', text, entity, index, action, schema);
-            return <RenderItem key={key} {...item} type={valueType} text={text} mode={'read'} />;
+            return (
+              <RenderItem
+                key={key}
+                {...item}
+                text={text}
+                dataIndex={dataIndex}
+                valueType={valueType}
+                mode={'read'}
+              />
+            );
           }}
           renderFormItem={(schema: any, config: any, form: any) => {
             if (config?.isEditable) {
               console.log('renderFormItem', schema, config, form);
             }
             return (
-              <RenderItem key={key} {...item} type={valueType} text={item?.text} mode={'edit'} />
+              <RenderItem
+                key={key}
+                {...item}
+                text={item?.text}
+                dataIndex={dataIndex}
+                valueType={valueType}
+                mode={'edit'}
+              />
             );
           }}
         ></ProDescriptions.Item>

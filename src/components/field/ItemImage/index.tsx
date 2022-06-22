@@ -36,7 +36,7 @@ const ItemImage = (props: ItemImageProps) => {
     );
   };
   const render = (_text: any, _props: ProFieldFCRenderProps) => {
-    console.log('ItemImage render', _text, _props);
+    // console.log('ItemImage render', _text, _props);
     return (
       <ItemUpload
         type={'upload'}

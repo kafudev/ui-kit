@@ -92,7 +92,7 @@ const backFormatValues = (_items: any[], _forms: any) => {
 };
 
 const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
-  const [values, setValues] = React.useState(formatValues(props.items, props.values));
+  const [values, setValues] = React.useState(formatValues(props.items, props?.values));
 
   // 绑定一个 ProFormInstance 实例
   const formRef = React.useRef<ProFormInstance<any>>();

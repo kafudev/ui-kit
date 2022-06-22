@@ -9,6 +9,7 @@ import { FileAddOutlined, InboxOutlined, PlusOutlined, UploadOutlined } from '@a
 import Dragger from 'antd/lib/upload/Dragger';
 import request from 'umi-request';
 import BaseIcon from '../../base/BaseIcon';
+import styles from './index.less';
 import 'antd/es/upload/style/index.css';
 
 export interface ItemUploadProps extends RenderItemProps {
@@ -32,7 +33,7 @@ const ItemUpload = (props: ItemUploadProps) => {
     });
 
   React.useEffect(() => {
-    console.log(LogTag, 'propsChange text', props.value);
+    // console.log(LogTag, 'propsChange text', props.value);
     if (props.value) {
       // 格式化数据结构
       // 分隔图片集合
@@ -334,7 +335,7 @@ const ItemUpload = (props: ItemUploadProps) => {
       showUploadList={{
         showPreviewIcon: true,
         showRemoveIcon: true,
-        showDownloadIcon: true,
+        showDownloadIcon: false,
         ...props?.fieldProps?.showUploadList,
       }}
       maxCount={props?.maxCount}

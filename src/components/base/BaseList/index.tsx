@@ -1,12 +1,14 @@
 import Icon, { ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
+import { ProFieldFCRenderProps } from '@ant-design/pro-utils';
 import { Button, Col, Dropdown, FormInstance, Menu, message, Popconfirm, Row } from 'antd';
 import type { SortOrder } from 'antd/lib/table/interface';
 import React, { PropsWithChildren, ReactNode, useImperativeHandle } from 'react';
 // @ts-ignore
 import { history } from 'umi';
 import page from '../../../utils/page';
+import RenderListItem from '../../list/RenderListItem';
 import BaseIcon from '../BaseIcon';
 import BasePage, { BasePageProps } from '../BasePage';
 
@@ -52,20 +54,20 @@ const LogTag = 'BaseList';
 const formatColumns = (_columns: any[]) => {
   for (let index = 0; index < (_columns.length || 0); index++) {
     const _column = _columns[index];
-    _columns[index].title = _column?.title || _column?.label;
-    _columns[index].dataIndex = _column?.dataIndex || _column?.name || _column?.key;
-    _columns[index].copyable = _column?.copyable || _column?.copy;
-    _columns[index].valueType = _column?.valueType || _column?.type;
-    _columns[index].hideInSearch = true; // 在表单中隐藏
-    _columns[index].hideInForm = true; // 在表单中隐藏
-    switch (_columns[index].valueType) {
+    _column.title = _column?.title || _column?.label;
+    _column.dataIndex = _column?.dataIndex || _column?.name || _column?.key;
+    _column.copyable = _column?.copyable || _column?.copy;
+    _column.valueType = _column?.valueType || _column?.type || 'text';
+    _column.hideInSearch = true; // 在表单中隐藏
+    _column.hideInForm = true; // 在表单中隐藏
+    switch (_column.valueType) {
       // 操作处理
       case 'handle':
       case 'option':
         if (_column?.handle) {
           // 分类
-          const _c_handle = (text: ReactNode, record: any, ii: number) => {
-            const _rr: any[] = _column?.handle(text, record, ii) || [];
+          const _c_handle = (text: ReactNode, record: any, ii: number, action: any) => {
+            const _rr: any[] = _column?.handle(text, record, ii, action) || [];
             let _handle = _rr?.map((_r: any, kk: number) => {
               let _type = '';
               let __r = _r;
@@ -199,12 +201,54 @@ const formatColumns = (_columns: any[]) => {
           };
 
           const _c_render = _c_handle;
-          _columns[index].render = _c_render;
+          _column.render = _c_render;
+        }
+        break;
+      case 'image':
+      case 'video':
+      case 'document':
+      case 'upload':
+      case 'switch':
+        let item = { ..._column };
+        // 渲染表单组件
+        const _c_render = (dom: any, record: any, index: number, action: any, props: any) => {
+          // console.log('render', dom, record, index, action, props);
+          return (
+            <RenderListItem
+              key={'render' + index}
+              data={{ ...record }}
+              {...item}
+              valueType={item.valueType}
+              mode={'read'}
+            />
+          );
+        };
+        const _c_renderFormItem = (schema: any, config: any, form: any) => {
+          if (config?.isEditable) {
+            // console.log('renderFormItem', schema, config, form);
+          }
+          return (
+            <RenderListItem
+              key={'renderFormItem' + index}
+              data={{}}
+              {...item}
+              valueType={item.valueType}
+              mode={'edit'}
+            />
+          );
+        };
+
+        if (_c_render) {
+          _column.render = _c_render;
+        }
+        if (_c_renderFormItem) {
+          _column.renderFormItem = _c_renderFormItem;
         }
         break;
       default:
         break;
     }
+    _columns[index] = _column;
   }
   console.log('formatColumns _columns', _columns);
   return _columns;
@@ -214,11 +258,56 @@ const formatColumns = (_columns: any[]) => {
 const formatFilters = (_filters: any[]) => {
   for (let index = 0; index < (_filters?.length || 0); index++) {
     const _filter = _filters[index];
-    _filters[index].title = _filter?.title || _filter?.label;
-    _filters[index].dataIndex = _filter?.dataIndex || _filter?.name || _filter?.key;
-    _filters[index].valueType = _filter?.valueType || _filter?.type;
-    _filters[index].renderFormItem = (_filter?.renderFormItem && _filter?.renderFormItem()) || '';
-    _filters[index].hideInTable = true; // 在表格中隐藏
+    _filter.title = _filter?.title || _filter?.label;
+    _filter.dataIndex = _filter?.dataIndex || _filter?.name || _filter?.key;
+    _filter.valueType = _filter?.valueType || _filter?.type || 'input';
+    _filter.hideInTable = true; // 在表格中隐藏
+    switch (_filter.valueType) {
+      case 'image':
+      case 'video':
+      case 'document':
+      case 'upload':
+      case 'switch':
+        let item = { ..._filter };
+        // 渲染表单组件
+        const _c_render = (dom: any, record: any, index: number, action: any, props: any) => {
+          // console.log('render', dom, record, index, action, props);
+          return (
+            <RenderListItem
+              key={'render' + index}
+              data={{ ...record }}
+              {...item}
+              valueType={item.valueType}
+              mode={'read'}
+            />
+          );
+        };
+        const _c_renderFormItem = (schema: any, config: any, form: any) => {
+          if (config?.isEditable) {
+            // console.log('renderFormItem', schema, config, form);
+          }
+          return (
+            <RenderListItem
+              key={'renderFormItem' + index}
+              data={{}}
+              {...item}
+              valueType={item.valueType}
+              mode={'edit'}
+            />
+          );
+        };
+
+        if (_c_render) {
+          _filter.render = _c_render;
+        }
+        if (_c_renderFormItem) {
+          _filter.renderFormItem = _c_renderFormItem;
+        }
+        break;
+      default:
+        break;
+    }
+    _filters[index] = _filter;
   }
   console.log('formatColumns _filters', _filters);
   return _filters;

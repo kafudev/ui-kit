@@ -16,76 +16,76 @@ const Page: React.FC<BaseListProps> = (props) => {
       image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
       status: 1,
     },
-    {
-      id: 2,
-      title: 'cccc',
-      place: 'shop_banner',
-      image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      status: 1,
-    },
-    {
-      id: 3,
-      title: 'cccc',
-      place: 'shop_banner',
-      image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      status: 1,
-    },
-    {
-      id: 4,
-      title: 'cccc',
-      place: 'shop_banner',
-      image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      status: 1,
-    },
-    {
-      id: 5,
-      title: 'cccc',
-      place: 'shop_banner',
-      image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      status: 1,
-    },
-    {
-      id: 6,
-      title: 'cccc',
-      place: 'shop_banner',
-      image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      status: 1,
-    },
-    {
-      id: 7,
-      title: 'cccc',
-      place: 'shop_banner',
-      image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      status: 1,
-    },
-    {
-      id: 8,
-      title: 'cccc',
-      place: 'shop_banner',
-      image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      status: 1,
-    },
-    {
-      id: 9,
-      title: 'cccc',
-      place: 'shop_banner',
-      image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      status: 1,
-    },
-    {
-      id: 10,
-      title: 'cccc',
-      place: 'shop_banner',
-      image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      status: 1,
-    },
-    {
-      id: 11,
-      title: 'cccc',
-      place: 'shop_banner',
-      image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      status: 1,
-    },
+    // {
+    //   id: 2,
+    //   title: 'cccc',
+    //   place: 'shop_banner',
+    //   image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    //   status: 1,
+    // },
+    // {
+    //   id: 3,
+    //   title: 'cccc',
+    //   place: 'shop_banner',
+    //   image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    //   status: 1,
+    // },
+    // {
+    //   id: 4,
+    //   title: 'cccc',
+    //   place: 'shop_banner',
+    //   image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    //   status: 1,
+    // },
+    // {
+    //   id: 5,
+    //   title: 'cccc',
+    //   place: 'shop_banner',
+    //   image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    //   status: 1,
+    // },
+    // {
+    //   id: 6,
+    //   title: 'cccc',
+    //   place: 'shop_banner',
+    //   image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    //   status: 1,
+    // },
+    // {
+    //   id: 7,
+    //   title: 'cccc',
+    //   place: 'shop_banner',
+    //   image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    //   status: 1,
+    // },
+    // {
+    //   id: 8,
+    //   title: 'cccc',
+    //   place: 'shop_banner',
+    //   image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    //   status: 1,
+    // },
+    // {
+    //   id: 9,
+    //   title: 'cccc',
+    //   place: 'shop_banner',
+    //   image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    //   status: 1,
+    // },
+    // {
+    //   id: 10,
+    //   title: 'cccc',
+    //   place: 'shop_banner',
+    //   image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    //   status: 1,
+    // },
+    // {
+    //   id: 11,
+    //   title: 'cccc',
+    //   place: 'shop_banner',
+    //   image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+    //   status: 1,
+    // },
   ]);
   const [actions] = React.useState<any[]>([
     {
@@ -157,36 +157,44 @@ const Page: React.FC<BaseListProps> = (props) => {
         },
       },
     },
+    {
+      label: '状态',
+      name: 'status2',
+      type: 'switch',
+      trueText: '打开',
+      falseText: '关闭',
+    },
   ]);
   const [columns] = React.useState<any[]>([
     { label: '序号', name: 'index', type: 'indexBorder' },
     { label: 'ID', name: 'id', align: 'center' },
-    { label: '标题', name: 'title', copy: true },
+    { label: '标题', name: 'title', copy: true, type: 'text' },
     { label: '图片', name: 'image', align: 'center', type: 'image' },
     {
       label: '状态',
       name: 'status',
       type: 'switch',
-      valueEnum: {
-        0: {
-          text: '关闭',
-          status: 'Error',
-        },
-        1: {
-          text: '开启',
-          status: 'Success',
-        },
-      },
+      // trueText: '打开',
+      // falseText: '关闭',
     },
     { label: '进度', name: 'progress', type: 'digit' },
     { title: '创建时间', align: 'center', name: 'createdAt' },
     {
       label: '操作',
-      align: 'center',
+      align: 'left',
       type: 'option',
       showLength: 3,
+      width: 180,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      handle: (text: ReactNode, record: any, index: number): ReactNode | any[] => [
+      handle: (text: ReactNode, record: any, index: number, action: any): ReactNode | any[] => [
+        <a
+          key="editable"
+          onClick={() => {
+            action?.startEditable?.(record.id);
+          }}
+        >
+          行编辑
+        </a>,
         // <Button
         //   key={index}
         //   onClick={() => {
@@ -235,10 +243,19 @@ const Page: React.FC<BaseListProps> = (props) => {
           text: '编辑-侧栏-底部',
           onClick: () => {
             const targetId = 'abc';
-            page.showDrawer(<BaseEdit mode={'modal'} action={'edit'} submitTarget={targetId} />, {
-              title: '侧栏编辑',
-              footer: <div id={targetId} />,
-            });
+            page.showDrawer(
+              <BaseEdit
+                mode={'modal'}
+                action={'edit'}
+                submitTarget={targetId}
+                items={[]}
+                values={{}}
+              />,
+              {
+                title: '侧栏编辑',
+                footer: <div id={targetId} />,
+              },
+            );
           },
         },
         {
@@ -253,10 +270,19 @@ const Page: React.FC<BaseListProps> = (props) => {
           text: '编辑-侧栏-底部',
           onClick: () => {
             const targetId = 'abc1';
-            page.showModal(<BaseEdit mode={'modal'} action={'edit'} submitTarget={targetId} />, {
-              title: '侧栏编辑',
-              footer: <div id={targetId} />,
-            });
+            page.showModal(
+              <BaseEdit
+                mode={'modal'}
+                action={'edit'}
+                submitTarget={targetId}
+                items={[]}
+                values={{}}
+              />,
+              {
+                title: '侧栏编辑',
+                footer: <div id={targetId} />,
+              },
+            );
           },
         },
       ],
@@ -278,9 +304,13 @@ const Page: React.FC<BaseListProps> = (props) => {
       actions={actions}
       footerActions={footerActions}
       columns={columns}
-      datas={datas}
       params={{}}
       request={request}
+      editable={{
+        onSave: (key: any, value: any) => {
+          console.log('editable', key, value);
+        },
+      }}
     />
   );
 };
