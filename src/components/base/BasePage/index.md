@@ -65,9 +65,10 @@ BasePage 封装了 antd pro 的 PageContainer 组件。 BasePage 支持 PageCont
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | mode | 呈现类型 | `'page'` \| `'drawer'` \| `'modal'` \| `'card'` | `'page'` |
-| title | 页面标题 | ReactNode | - |
-| extra | 标题栏扩展按钮 | ReactNode | - |
-| content | 内容区 | ReactNode | - |
+| title | 页面标题 | `'ReactNode' \| 'string'` | - |
+| subTitle | 页面副标题 | `'ReactNode' \| 'string'` | - |
+| extra | 标题栏扩展按钮 | `'ReactNode' \| 'string'` | - |
+| content | 内容区 | `'ReactNode' \| 'string'` | - |
 | cardProps | 页面内部默认 card 配置，设置为 false，则不渲染 ProCard，关联的 ProCard 的[配置](https://procomponents.ant.design/components/card#api) | `object \| boolean` | - |
 | backTopProps | 页面 BackTop 向上配置，设置为 false，则不渲染 BackTop，关联的 BackTop 的[配置](https://ant.design/components/back-top-cn/#API) | `object \| boolean` | - |
 | header | [PageHeader](https://ant.design/components/page-header-cn/) 的所有属性 | `PageHeaderProps` | - |

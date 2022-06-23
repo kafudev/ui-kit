@@ -43,6 +43,8 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
       // 以下自定义组件
       case 'image': // 图片
         return <ItemImage mode={item?.mode} {...item} />;
+      case 'avatar': // 头像
+        return <ItemImage mode={item?.mode} max={1} {...item} />;
       case 'gallery': // 图集
         return (
           <ItemImage

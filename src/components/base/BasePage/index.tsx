@@ -22,8 +22,9 @@ const BasePage: React.FC<BasePageProps> = (props) => {
         <PageContainer
           {...props}
           header={{
-            title: props.title,
-            extra: props.extra,
+            ...(props?.title ? { title: props?.title } : {}),
+            ...(props?.subTitle ? { subTitle: props?.subTitle } : {}),
+            ...(props?.extra ? { extra: props?.extra } : {}),
             onBack: () => window.history.back(),
             // todo面包屑待处理
             // breadcrumbRender: (_props: PageHeaderProps) => {
