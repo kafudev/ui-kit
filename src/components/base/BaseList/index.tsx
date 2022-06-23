@@ -52,8 +52,8 @@ export interface BaseListProps extends PropsWithChildren<any> {
 const LogTag = 'BaseList';
 // 格式化列数据
 const formatColumns = (_columns: any[]) => {
-  for (let index = 0; index < (_columns.length || 0); index++) {
-    const _column = _columns[index];
+  for (let i = 0; i < (_columns.length || 0); i++) {
+    const _column = _columns[i];
     _column.title = _column?.title || _column?.label;
     _column.dataIndex = _column?.dataIndex || _column?.name || _column?.key;
     _column.copyable = _column?.copyable || _column?.copy;
@@ -215,9 +215,9 @@ const formatColumns = (_columns: any[]) => {
           // console.log('render', dom, record, index, action, props);
           return (
             <RenderListItem
-              key={'render' + index}
               data={{ ...record }}
               {...item}
+              key={i}
               valueType={item.valueType}
               mode={'read'}
             />
@@ -228,13 +228,7 @@ const formatColumns = (_columns: any[]) => {
             // console.log('renderFormItem', schema, config, form);
           }
           return (
-            <RenderListItem
-              key={'renderFormItem' + index}
-              data={{}}
-              {...item}
-              valueType={item.valueType}
-              mode={'edit'}
-            />
+            <RenderListItem data={{}} {...item} key={i} valueType={item.valueType} mode={'edit'} />
           );
         };
 
@@ -248,7 +242,7 @@ const formatColumns = (_columns: any[]) => {
       default:
         break;
     }
-    _columns[index] = _column;
+    _columns[i] = _column;
   }
   console.log('formatColumns _columns', _columns);
   return _columns;
@@ -256,13 +250,14 @@ const formatColumns = (_columns: any[]) => {
 
 // 格式化筛选数据
 const formatFilters = (_filters: any[]) => {
-  for (let index = 0; index < (_filters?.length || 0); index++) {
-    const _filter = _filters[index];
+  for (let i = 0; i < (_filters?.length || 0); i++) {
+    const _filter = _filters[i];
     _filter.title = _filter?.title || _filter?.label;
     _filter.dataIndex = _filter?.dataIndex || _filter?.name || _filter?.key;
     _filter.valueType = _filter?.valueType || _filter?.type || 'input';
     _filter.hideInTable = true; // 在表格中隐藏
     switch (_filter.valueType) {
+      case 'text':
       case 'image':
       case 'video':
       case 'document':
@@ -274,9 +269,9 @@ const formatFilters = (_filters: any[]) => {
           // console.log('render', dom, record, index, action, props);
           return (
             <RenderListItem
-              key={'render' + index}
               data={{ ...record }}
               {...item}
+              key={i}
               valueType={item.valueType}
               mode={'read'}
             />
@@ -287,13 +282,7 @@ const formatFilters = (_filters: any[]) => {
             // console.log('renderFormItem', schema, config, form);
           }
           return (
-            <RenderListItem
-              key={'renderFormItem' + index}
-              data={{}}
-              {...item}
-              valueType={item.valueType}
-              mode={'edit'}
-            />
+            <RenderListItem data={{}} {...item} key={i} valueType={item.valueType} mode={'edit'} />
           );
         };
 
@@ -307,7 +296,7 @@ const formatFilters = (_filters: any[]) => {
       default:
         break;
     }
-    _filters[index] = _filter;
+    _filters[i] = _filter;
   }
   console.log('formatColumns _filters', _filters);
   return _filters;

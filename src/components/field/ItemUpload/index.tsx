@@ -166,6 +166,11 @@ const ItemUpload = (props: ItemUploadProps) => {
         headers: {
           // Accept: '*/*',
           // 'Content-Type': 'multipart/form-data',
+          // Accept: '*/*',
+          // 'Content-Type': 'multipart/form-data',
+          'X-Access-Token': window.localStorage.getItem('token') || '',
+          AUTHORIZATION: window.localStorage.getItem('token') || '',
+          ...props?.headers,
         },
         data: formData,
         skipErrorHandler: true,
@@ -328,32 +333,34 @@ const ItemUpload = (props: ItemUploadProps) => {
       )}
     </Dragger>
   ) : props.uploadType === 'card' ? (
-    <Upload
-      {...props}
-      {...props.fieldProps}
-      showUploadList={{
-        showPreviewIcon: true,
-        showRemoveIcon: true,
-        showDownloadIcon: false,
-        ...props?.fieldProps?.showUploadList,
-      }}
-      maxCount={props?.maxCount}
-      onChange={onChange}
-      onDownload={onDownload}
-      onPreview={onPreview}
-      previewFile={previewFile}
-      beforeUpload={beforeUpload}
-      fileList={fileList}
-    >
-      {fileList.length >= props?.maxCount || props.mode == 'read' ? null : (
-        <>
-          <div>
-            <BaseIcon name={props?.icon || 'FileAddOutlined'} style={{ fontSize: 28 }} />
-            <div style={{ marginTop: 8 }}>点击上传</div>
-          </div>
-        </>
-      )}
-    </Upload>
+    <div style={{ minHeight: '120px' }}>
+      <Upload
+        {...props}
+        {...props.fieldProps}
+        showUploadList={{
+          showPreviewIcon: true,
+          showRemoveIcon: true,
+          showDownloadIcon: false,
+          ...props?.fieldProps?.showUploadList,
+        }}
+        maxCount={props?.maxCount}
+        onChange={onChange}
+        onDownload={onDownload}
+        onPreview={onPreview}
+        previewFile={previewFile}
+        beforeUpload={beforeUpload}
+        fileList={fileList}
+      >
+        {fileList.length >= props?.maxCount || props.mode == 'read' ? null : (
+          <>
+            <div>
+              <BaseIcon name={props?.icon || 'FileAddOutlined'} style={{ fontSize: 28 }} />
+              <div style={{ marginTop: 8 }}>点击上传</div>
+            </div>
+          </>
+        )}
+      </Upload>
+    </div>
   ) : (
     <Upload
       {...props}

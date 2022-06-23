@@ -99,9 +99,9 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
         return null;
     }
     // 默认通过原组件渲染
-    if (item.mode !== 'read') {
-      delete item['text'];
-    }
+    // if (item.mode !== 'read') {
+    //   delete item['text'];
+    // }
     // console.warn('item ', valueType, item, _item);
     return (
       <>
@@ -118,16 +118,8 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
           onChange={item?.onChange}
           visible={item?.visible}
           rules={item?.rules}
+          request={item?.request}
           {...item}
-          request={async () => {
-            if (item?.request) {
-              // 请求远程下拉数据
-              const list = await item.request();
-              return list || [];
-            } else {
-              return item?.options || item?.valueEnum || item?.dropList || [];
-            }
-          }}
           fieldProps={{
             disabled: item?.disabled,
             placeholder: item?.placeholder,

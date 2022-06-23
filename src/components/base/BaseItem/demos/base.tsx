@@ -6,7 +6,7 @@ export default (props: BaseItemProps) => (
   <ProCard>
     <Row>
       <Space>
-        <BaseItem mode={'edit'} type={'input'} {...props} />
+        <BaseItem mode={'edit'} type={'text'} {...props} />
         <BaseItem mode={'edit'} type={'text'} {...props} />
         <BaseItem mode={'edit'} type={'date'} {...props} />
       </Space>
@@ -14,7 +14,7 @@ export default (props: BaseItemProps) => (
     <br />
     <Row>
       <Space>
-        <BaseItem mode={'edit'} type={'input'} {...props} />
+        <BaseItem mode={'edit'} type={'text'} {...props} />
         <BaseItem mode={'edit'} type={'text'} {...props} />
         <BaseItem mode={'edit'} type={'date'} {...props} />
       </Space>
