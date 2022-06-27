@@ -155,7 +155,7 @@ const ItemUpload = (props: ItemUploadProps) => {
         return url;
       }
       let action = '/admin/sys/common/upload';
-      action = '/admin/api/upload/uploadImage';
+      // action = '/admin/api/upload/uploadImage';
       // action = '/admin/api/upload/uploadVideo';
       // action = '/admin/api/upload/uploadDocument';
       if (props?.actionUrl) {

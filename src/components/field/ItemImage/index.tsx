@@ -5,6 +5,7 @@ import { ProFieldFCRenderProps } from '@ant-design/pro-utils';
 
 import { Upload } from 'antd';
 import ItemUpload from '../ItemUpload';
+import props from '../../base/BaseIcon/demos/props';
 
 export interface ItemImageProps extends RenderItemProps {
   uploadType: 'card' | 'button' | 'dragger';
@@ -15,6 +16,7 @@ const ItemImage = (props: ItemImageProps) => {
     // console.log('ItemImage renderFormItem', _text, _props);
     return (
       <ItemUpload
+        {...props}
         type={'upload'}
         uploadType={props.uploadType || 'card'}
         mode={'edit'}
@@ -39,6 +41,7 @@ const ItemImage = (props: ItemImageProps) => {
     // console.log('ItemImage render', _text, _props);
     return (
       <ItemUpload
+        {...props}
         type={'upload'}
         uploadType={props.uploadType || 'card'}
         mode={'read'}

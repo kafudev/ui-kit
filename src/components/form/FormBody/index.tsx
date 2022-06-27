@@ -14,7 +14,7 @@ const FormBody: React.FC<Props> = (props) => {
   const [itemList, setItemList] = React.useState<any[]>([]);
 
   const getItemList = (): any[] => {
-    const ll = props.items.map((item, index) => {
+    const ll = props?.items?.map((item, index) => {
       // 渲染表单组件
       return RenderFormItem({
         key: index,

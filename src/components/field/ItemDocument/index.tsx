@@ -15,6 +15,7 @@ const ItemDocument = (props: ItemDocumentProps) => {
     console.log('ItemDocument renderFormItem', _text, _props);
     return (
       <ItemUpload
+        {...props}
         type={'upload'}
         uploadType={props.uploadType || 'button'}
         mode={'edit'}
@@ -40,6 +41,7 @@ const ItemDocument = (props: ItemDocumentProps) => {
     console.log('ItemDocument render', _text, _props);
     return (
       <ItemUpload
+        {...props}
         type={'upload'}
         uploadType={props.uploadType || 'button'}
         mode={'read'}

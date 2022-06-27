@@ -15,6 +15,7 @@ const ItemVideo = (props: ItemVideoProps) => {
     console.log('ItemVideo renderFormItem', _text, _props);
     return (
       <ItemUpload
+        {...props}
         type={'upload'}
         uploadType={props.uploadType || 'card'}
         mode={'edit'}
@@ -40,6 +41,7 @@ const ItemVideo = (props: ItemVideoProps) => {
     console.log('ItemVideo render', _text, _props);
     return (
       <ItemUpload
+        {...props}
         type={'upload'}
         uploadType={props.uploadType || 'card'}
         mode={'read'}
