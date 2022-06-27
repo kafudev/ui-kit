@@ -5,7 +5,6 @@ import { ProFieldFCRenderProps } from '@ant-design/pro-utils';
 
 import { Upload } from 'antd';
 import ItemUpload from '../ItemUpload';
-import props from '../../base/BaseIcon/demos/props';
 
 export interface ItemImageProps extends RenderItemProps {
   uploadType: 'card' | 'button' | 'dragger';
