@@ -1,6 +1,7 @@
 import ProCard from '@ant-design/pro-card';
 import { Button, Space } from 'antd';
 import React from 'react';
+import FormBox from './form';
 import page from '../page';
 
 export default () => (
@@ -35,6 +36,26 @@ export default () => (
         }}
       >
         {'打开侧栏-添加侧栏扩展按钮'}
+      </Button>
+      <Button
+        type="primary"
+        onClick={() => {
+          page.showDrawer(
+            <FormBox
+              mode={'drawer'}
+              setFooter={true}
+              items={[]}
+              values={{}}
+              action={'edit'}
+            ></FormBox>,
+            {
+              title: '侧栏标题',
+              footer: [<Button>{'自定义按钮'}</Button>],
+            },
+          );
+        }}
+      >
+        {'打开侧栏-表单编辑'}
       </Button>
     </Space>
   </ProCard>

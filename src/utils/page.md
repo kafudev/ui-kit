@@ -55,7 +55,7 @@ page.closeModal(ref);
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| component | 需要呈现的组件 | ReactNode |
+| component | 需要呈现的组件, 编辑组件设置 setFooter 属性，可将底部操作栏放置侧栏底部 | ReactNode |
 | drawerProps | 侧栏的属性，可透传 Drawer[属性](https://ant.design/components/drawer-cn/) | object | - |
 
 ### closeDrawer
@@ -73,7 +73,7 @@ page.closeModal(ref);
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| component | 需要呈现的组件 | ReactNode |
+| component | 需要呈现的组件, 编辑组件设置 setFooter 属性，可将底部操作栏放置弹窗底部 | ReactNode |
 | modalProps | 弹窗的属性，可透传 Modal[属性](https://ant.design/components/modal-cn/) | object | - |
 
 ### closeModal

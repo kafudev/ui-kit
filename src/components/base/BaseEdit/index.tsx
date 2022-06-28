@@ -21,9 +21,6 @@ export interface BaseEditProps extends BaseFormProps {
 const LogTag = 'BaseEdit';
 const BaseEdit: React.FC<BaseEditProps> = React.forwardRef((props, ref) => {
   const formRef = React.useRef<FormInstance>();
-  const [layout, setLayout] = React.useState<'horizontal' | 'vertical' | 'inline'>(
-    props.layout || 'horizontal',
-  );
   const [items, setItems] = React.useState(props.items);
   const [values, setValues] = React.useState(props.values);
 
@@ -114,7 +111,7 @@ const BaseEdit: React.FC<BaseEditProps> = React.forwardRef((props, ref) => {
         {...props}
         items={items}
         values={values}
-        layout={layout}
+        layout={props.layout || 'horizontal'}
       />
     );
   };

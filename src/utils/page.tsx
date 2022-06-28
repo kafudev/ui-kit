@@ -1,4 +1,4 @@
-import type { DrawerProps, ModalProps } from 'antd';
+import { DrawerProps, ModalProps, Space } from 'antd';
 import { Modal } from 'antd';
 import { Drawer } from 'antd';
 import { ReactNode, useRef } from 'react';
@@ -6,6 +6,8 @@ import { useImperativeHandle } from 'react';
 import { useEffect } from 'react';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { nanoid } from '@ant-design/pro-utils';
+import './page.less';
 
 let global_drawer_nodes: HTMLDivElement[] = [],
   global_modal_nodes: HTMLDivElement[] = [];
@@ -87,13 +89,46 @@ export function showDrawer(
     ref: ref,
   };
   global_drawer_nodes.push(_nn);
+
+  // 弹窗属性
+  let _dom = dom;
+  let _drawerProps = { ...drawerProps };
+  // 获取组件属性
+  if (React.isValidElement(_dom)) {
+    // 获取属性
+    console.log('获取组件属性', _dom?.props);
+    // 设置底部按钮
+    if (_dom?.props?.setFooter) {
+      const targetId = '_' + nanoid();
+      _dom = React.cloneElement(_dom, {
+        submitTargetId: targetId,
+      });
+      if (_drawerProps?.footer) {
+        if (Array.isArray(_drawerProps.footer)) {
+          _drawerProps.footer.push(
+            <span id={targetId} className="drawerFooterBtn" style={{ marginLeft: '10px' }} />,
+          );
+        }
+        if (React.isValidElement(_drawerProps.footer)) {
+          _drawerProps.footer = [
+            _drawerProps.footer,
+            <span id={targetId} className="drawerFooterBtn" style={{ marginLeft: '10px' }} />,
+          ];
+        }
+      } else {
+        _drawerProps.footer = <span id={targetId} className="drawerFooterBtn" />;
+      }
+    }
+  }
+
+  console.log('showDrawer _', _dom, _drawerProps);
   ReactDOM.render(
-    <RenderDrawer ref={ref} node={node} {...drawerProps}>
-      {dom}
+    <RenderDrawer ref={ref} node={node} {..._drawerProps}>
+      {_dom}
     </RenderDrawer>,
     node,
   );
-  // const xx = ReactDOM.createPortal(<RenderDrawer {...drawerProps}>{dom}</RenderDrawer>, document.body);
+  // const xx = ReactDOM.createPortal(<RenderDrawer {..._drawerProps}>{dom}</RenderDrawer>, document.body);
   // ReactDOM.render(<>{xx.children}</>, node);
   return ref;
 }
@@ -204,13 +239,43 @@ export function showModal(dom: ReactNode, modalProps: ModalProps): React.RefObje
   };
   global_modal_nodes.push(_nn);
 
+  // 弹窗属性
+  let _dom = dom;
+  let _modalProps = { ...modalProps };
+  // 获取组件属性
+  if (React.isValidElement(_dom)) {
+    // 获取属性
+    console.log('获取组件属性', _dom?.props);
+    // 设置底部按钮
+    if (_dom?.props?.setFooter) {
+      const targetId = '_' + nanoid();
+      _dom = React.cloneElement(_dom, {
+        submitTargetId: targetId,
+      });
+      if (_modalProps?.footer) {
+        if (Array.isArray(_modalProps.footer)) {
+          _modalProps.footer.push(<span id={targetId} style={{ marginLeft: '10px' }} />);
+        }
+        if (React.isValidElement(_modalProps.footer)) {
+          _modalProps.footer = [
+            _modalProps.footer,
+            <span id={targetId} style={{ marginLeft: '10px' }} />,
+          ];
+        }
+      } else {
+        _modalProps.footer = <span id={targetId} />;
+      }
+    }
+  }
+
+  console.log('showModal _', _dom, _modalProps);
   ReactDOM.render(
-    <RenderModal ref={ref} node={node} {...modalProps}>
-      {dom}
+    <RenderModal ref={ref} node={node} {..._modalProps}>
+      {_dom}
     </RenderModal>,
     node,
   );
-  // const xx = ReactDOM.createPortal(<RenderModal {...modalProps}>{dom}</RenderModal>, document.body);
+  // const xx = ReactDOM.createPortal(<RenderModal {..._modalProps}>{dom}</RenderModal>, document.body);
   // ReactDOM.render(<>{xx.children}</>, node);
   return ref;
 }

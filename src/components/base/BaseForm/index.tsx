@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, PropsWithoutRef, useImperativeHandle } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Space } from 'antd';
 import FormBody from '../../form/FormBody';
 import type { ProFormInstance, ProFormProps } from '@ant-design/pro-form';
 import { FooterToolbar } from '@ant-design/pro-layout';
@@ -13,13 +13,16 @@ export interface BaseFormProps extends ProFormProps, PropsWithoutRef<any> {
   values: { [key: string]: any }; // 数据值
   // width?: string | number; // 表格宽度
   rowCol?: number; // 行列数 默认为1
+  setFooter?: boolean; // 是否将提交按钮挂载到目标，可在弹窗和侧栏使用
+  submitTargetId?: Element | string; // 提交按钮挂载目标，可在弹窗和侧栏使用
   globalFixedSubmit?: boolean; // 全局固定提交按钮组
-  submitTargetId?: Element | string; // 提交按钮挂载目标
   onValuesChange?: (changedValues: any, value: any) => void; // 表单项数据变化
   onSubmit?: (formData: Record<string, any>) => Promise<boolean | void>; // 提交表单
   onReset?: () => void; // 重置表单
 }
 const LogTag = 'BaseForm';
+type LayoutType = Parameters<typeof ProForm>[0]['layout'];
+const LAYOUT_TYPE_HORIZONTAL = 'horizontal';
 
 // 格式化表单数据
 const formatValues = (_items: any[], _forms: any) => {
@@ -145,32 +148,35 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
         return await values;
       }}
       {...props}
+      layout={props?.layout}
       submitter={{
-        render: (_: any, dom: any[]) => {
+        render: (_: any, doms: any[]) => {
+          let _doms =
+            props?.layout === LAYOUT_TYPE_HORIZONTAL ? (
+              <Row>
+                <Col span={14} offset={(props?.labelCol as number) || 6}>
+                  <Space>{doms}</Space>
+                </Col>
+              </Row>
+            ) : (
+              [...doms]
+            );
           if (props?.submitTargetId) {
             // 如果有父组件需要展示，则推到目标展示
-            // 反转显示，否则会错位
-            const _dom = [...dom.reverse()];
-            const _ll = _dom?.map((dd: any) => {
-              return dd;
-            });
-            const _nodes = (
-              <Row justify={'end'}>
-                {_ll?.map((dd: any, index: number) => {
-                  return (
-                    <Col style={{ marginRight: '8px' }} key={index}>
-                      {dd}
-                    </Col>
-                  );
-                })}
-              </Row>
-            );
+            // 无须添加外围宽度
+            _doms = [...doms];
             // 目标渲染
             if (props.submitTargetId) {
               // 动态位置
-              const xx = ReactDOM.createPortal(_nodes, document.body);
+              const xx = ReactDOM.createPortal(_doms, document.body);
               if (typeof props.submitTargetId === 'string') {
-                ReactDOM.render(<>{xx.children}</>, document.getElementById(props.submitTargetId));
+                let xid = document.getElementById(props.submitTargetId);
+                if (xid) {
+                  ReactDOM.render(
+                    <>{xx.children}</>,
+                    document.getElementById(props.submitTargetId),
+                  );
+                }
               } else {
                 ReactDOM.render(<>{xx.children}</>, props.submitTargetId);
               }
@@ -179,11 +185,9 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
             return [];
           } else if (props?.globalFixedSubmit === true) {
             // 全局底部固定显示
-            // 反转显示，否则会错位
-            return <FooterToolbar>{[...dom.reverse()]}</FooterToolbar>;
+            return <FooterToolbar>{_doms}</FooterToolbar>;
           } else {
-            // 反转显示，否则会错位
-            return [...dom.reverse()];
+            return _doms;
           }
         },
         ...props.submitter,
