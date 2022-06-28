@@ -154,7 +154,7 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
           let _doms =
             props?.layout === LAYOUT_TYPE_HORIZONTAL ? (
               <Row>
-                <Col span={14} offset={(props?.labelCol as number) || 6}>
+                <Col offset={(props?.labelCol as number) || 6 / (props?.rowCol || 1)}>
                   <Space>{doms}</Space>
                 </Col>
               </Row>
