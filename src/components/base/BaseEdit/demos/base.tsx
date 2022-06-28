@@ -28,6 +28,14 @@ const Page: React.FC<BaseEditProps> = (props) => {
       disabled: true,
     },
     {
+      label: '金额',
+      name: 'number',
+      type: 'number',
+      min: 0,
+      width: 'lg',
+      placeholder: '请输入金额',
+    },
+    {
       label: '封面图',
       name: 'image',
       type: 'image',

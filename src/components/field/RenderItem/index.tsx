@@ -42,7 +42,14 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
         return <ItemHeader mode={item?.mode} {...item} />;
       // 以下自定义组件
       case 'image': // 图片
-        return <ItemImage mode={item?.mode} {...item} />;
+        return (
+          <ItemImage
+            mode={item?.mode}
+            {...item}
+            max={item?.max || 1}
+            fieldProps={{ maxCount: item?.max || 1, multiple: false, ...item.fieldProps }}
+          />
+        );
       case 'avatar': // 头像
         return <ItemImage mode={item?.mode} max={1} {...item} />;
       case 'gallery': // 图集
@@ -67,6 +74,15 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
       case 'string':
       case 'text': // 输入框
         item.valueType = 'text';
+        break;
+      case 'number':
+      case 'digit': // 数字输入框
+        item.valueType = 'digit';
+        break;
+      case 'numberRange':
+      case 'digitRange': // 数字范围输入框
+        item.valueType = 'digitRange';
+        item.fieldProps = { min: item?.min, max: item?.max, ...item.fieldProps };
         break;
       case 'switch': // 开关
         let trueText =
@@ -106,6 +122,7 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
     return (
       <>
         <ProField
+          {...item}
           mode={item.mode}
           name={item.name}
           valueType={item.valueType}
@@ -119,7 +136,7 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
           visible={item?.visible}
           rules={item?.rules}
           request={item?.request}
-          {...item}
+          width={item?.width}
           fieldProps={{
             disabled: item?.disabled,
             placeholder: item?.placeholder,
