@@ -70,6 +70,10 @@ const formatColumns = (_columns: any[]) => {
             let _handle = _rr?.map((_r: any, kk: number) => {
               let _type = '';
               let __r = _r;
+              if (_r && React.isValidElement(_r)) {
+                // 如果是组件，则认为是可渲染的组件
+                return _r;
+              }
               if (_r && typeof _r === 'object') {
                 // 如果是对象，则认为是操作配置
                 _type = _r?.type;
@@ -83,6 +87,42 @@ const formatColumns = (_columns: any[]) => {
                 };
               }
               switch (_type) {
+                case 'link':
+                  return (
+                    <a
+                      key={`${ii}${kk}`}
+                      type="link"
+                      onClick={() => {
+                        if (__r?.onClick) {
+                          return __r?.onClick();
+                        }
+                        if (__r?.url) {
+                          history?.push(__r?.url);
+                        }
+                      }}
+                    >
+                      {__r?.text || '跳转'}
+                    </a>
+                  );
+                  break;
+                case 'button':
+                  return (
+                    <a
+                      key={`${ii}${kk}`}
+                      type="link"
+                      onClick={() => {
+                        if (__r?.onClick) {
+                          return __r?.onClick();
+                        }
+                        if (__r?.url) {
+                          history?.push(__r?.url);
+                        }
+                      }}
+                    >
+                      {__r?.text || '点击'}
+                    </a>
+                  );
+                  break;
                 case 'info':
                   return (
                     <a
@@ -182,7 +222,7 @@ const formatColumns = (_columns: any[]) => {
               return _r;
             });
             // 超过数量显示省略号
-            const maxLength = _column?.showLength == null || _column?.showLength == undefined || 3;
+            const maxLength = _column?.showLength || 3;
             if (_handle?.length > maxLength) {
               const _mains: any[] = [];
               const _menus: any[] | undefined = [];
@@ -556,7 +596,7 @@ const BaseList: React.FC<BaseListProps> = React.forwardRef((props, ref) => {
           formRef={formRef}
           columns={[...columns, ...filters]}
           params={props?.params}
-          cardBordered={props?.cardBordered}
+          cardBordered={props?.cardBordered == null ? true : props?.cardBordered}
           request={async (params = {}, sort, filter) => {
             console.log('BaseList request', params, sort, filter);
             if (props.request) {
