@@ -52,7 +52,7 @@ const ItemUpload = (props: ItemUploadProps) => {
       });
       setFileList([..._fileList]);
     }
-  }, []);
+  }, [props.value]);
 
   const beforeUpload = async (file: RcFile, _fileList: RcFile[]) => {
     console.log('beforeUpload', file, fileList);

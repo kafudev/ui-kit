@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BaseEdit, BaseEditProps } from '@kafudev/ui-kit';
 import { findIndexItems } from '@kafudev/ui-kit';
+import { Button } from 'antd';
 
 const Page: React.FC<BaseEditProps> = (props) => {
   const [values, setValues] = React.useState<any>({
@@ -114,6 +115,18 @@ const Page: React.FC<BaseEditProps> = (props) => {
     { label: '状态', name: 'status', type: 'switch', trueText: '打开', falseText: '关闭' },
   ]);
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setValues({
+  //       title: '标题',
+  //       place: 'shop_banner',
+  //       image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+  //       // type: 'horizontal',
+  //       status: true,
+  //     });
+  //   }, 1500);
+  // }, []);
+
   // 表单提交
   const onSubmit = async (values: any) => {
     console.log('Page onSubmit:', values);
@@ -135,8 +148,8 @@ const Page: React.FC<BaseEditProps> = (props) => {
               };
               setItems([...items]);
             } else {
-              // items[findIndexItems('image', items)].mode = 'read';
-              // items[findIndexItems('gallery', items)].mode = 'read';
+              items[findIndexItems('image', items)].mode = 'read';
+              items[findIndexItems('gallery', items)].mode = 'read';
               items[findIndexItems('gallery', items)].fieldProps = {
                 disabled: true,
               };

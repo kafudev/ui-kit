@@ -1,7 +1,6 @@
 import Icon, { ExclamationCircleOutlined } from '@ant-design/icons';
 import type { ActionType } from '@ant-design/pro-table';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
-import { ProFieldFCRenderProps } from '@ant-design/pro-utils';
 import { Button, Col, Dropdown, FormInstance, Menu, message, Popconfirm, Row } from 'antd';
 import type { SortOrder } from 'antd/lib/table/interface';
 import React, { PropsWithChildren, ReactNode, useImperativeHandle } from 'react';

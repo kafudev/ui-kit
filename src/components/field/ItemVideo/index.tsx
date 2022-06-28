@@ -12,7 +12,7 @@ export interface ItemVideoProps extends RenderItemProps {
 }
 const ItemVideo = (props: ItemVideoProps) => {
   const renderFormItem = (_text: any, _props: ProFieldFCRenderProps, _dom: JSX.Element) => {
-    console.log('ItemVideo renderFormItem', _text, _props);
+    // console.log('ItemVideo renderFormItem', _text, _props);
     return (
       <ItemUpload
         {...props}
@@ -38,7 +38,7 @@ const ItemVideo = (props: ItemVideoProps) => {
   };
 
   const render = (_text: any, _props: ProFieldFCRenderProps) => {
-    console.log('ItemVideo render', _text, _props);
+    // console.log('ItemVideo render', _text, _props);
     return (
       <ItemUpload
         {...props}

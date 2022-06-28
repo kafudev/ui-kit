@@ -12,7 +12,7 @@ export interface ItemDocumentProps extends RenderItemProps {
 }
 const ItemDocument = (props: ItemDocumentProps) => {
   const renderFormItem = (_text: any, _props: ProFieldFCRenderProps, _dom: JSX.Element) => {
-    console.log('ItemDocument renderFormItem', _text, _props);
+    // console.log('ItemDocument renderFormItem', _text, _props);
     return (
       <ItemUpload
         {...props}
@@ -38,7 +38,7 @@ const ItemDocument = (props: ItemDocumentProps) => {
   };
 
   const render = (_text: any, _props: ProFieldFCRenderProps) => {
-    console.log('ItemDocument render', _text, _props);
+    // console.log('ItemDocument render', _text, _props);
     return (
       <ItemUpload
         {...props}

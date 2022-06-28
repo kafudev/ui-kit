@@ -92,6 +92,7 @@ const backFormatValues = (_items: any[], _forms: any) => {
 };
 
 const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
+  const [items, setItems] = React.useState(props.items);
   const [values, setValues] = React.useState(formatValues(props.items, props?.values));
 
   // 绑定一个 ProFormInstance 实例
@@ -102,10 +103,18 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
     ...formRef.current,
   }));
 
+  // 属性值变化数据
+  React.useEffect(() => {
+    console.log(LogTag, 'propsChange items', props.items);
+    if (props.items) {
+      setItems(props.items);
+    }
+  }, [props.items]);
+
   React.useEffect(() => {
     if (props.values) {
       // 格式化数据
-      const newForms = formatValues(props.items, props.values);
+      const newForms = formatValues(items, props.values);
       setValues(newForms);
       formRef?.current?.setFieldsValue(newForms);
       console.log(LogTag, 'formatValues Forms', props.values, newForms);
@@ -115,8 +124,8 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
   return (
     <ProForm
       formRef={formRef}
-      labelCol={props?.labelCol || { span: props.layout === 'vertical' ? 24 : 6 }}
-      wrapperCol={props?.wrapperCol || { span: props.layout === 'vertical' ? 24 : 18 }}
+      labelCol={props?.labelCol || { span: props.layout === 'vertical' ? 22 : 6 }}
+      wrapperCol={props?.wrapperCol || { span: props.layout === 'vertical' ? 22 : 16 }}
       initialValues={{
         ...values,
       }}
@@ -129,7 +138,9 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
         if (props?.request) {
           // 请求远程下拉数据
           const forms = await props.request(params, props);
-          return forms;
+          const newForms = formatValues(items, forms);
+          setValues(newForms);
+          return newForms;
         }
         return await values;
       }}
@@ -183,11 +194,11 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
         // console.log(LogTag, 'onFinish', values, val);
         if (props.onFinish) {
           // 反格式化数据
-          const newForms = backFormatValues(props.items, val);
+          const newForms = backFormatValues(items, val);
           await props.onFinish(newForms);
         } else if (props.onSubmit) {
           // 反格式化数据
-          const newForms = backFormatValues(props.items, val);
+          const newForms = backFormatValues(items, val);
           await props.onSubmit(newForms);
         }
       }}
@@ -199,7 +210,7 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
         }
       }}
     >
-      <FormBody rowCol={props.rowCol} items={props.items} values={values} />
+      <FormBody rowCol={props.rowCol} items={items} values={values} />
     </ProForm>
   );
 });

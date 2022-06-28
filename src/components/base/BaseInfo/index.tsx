@@ -1,6 +1,5 @@
 import ProDescriptions, { ProDescriptionsProps } from '@ant-design/pro-descriptions/es/index';
 import { ActionType } from '@ant-design/pro-table';
-import { Row } from 'antd';
 import React, { useRef, useImperativeHandle } from 'react';
 import RenderInfoItem from '../../info/RenderInfoItem';
 import BasePage, { BasePageProps } from '../BasePage';

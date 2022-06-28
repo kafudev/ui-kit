@@ -2,7 +2,7 @@ import ProCard, { ProCardProps } from '@ant-design/pro-card';
 import { PageContainer, PageContainerProps } from '@ant-design/pro-layout';
 import { BackTop, BackTopProps } from 'antd';
 import React, { ReactNode } from 'react';
-// import styles from './index.less';
+import './index.less';
 
 export interface BasePageProps extends PageContainerProps {
   mode?: 'page' | 'drawer' | 'modal' | 'card'; // 页面呈现类型

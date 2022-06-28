@@ -49,7 +49,7 @@ BaseForm 封装了 antd pro 的 ProForm 和 Form 组件。 BasePage 支持 ProFo
 | --- | --- | --- | --- |
 | label | 标签名称 | `string` | - |
 | tooltip | 会在 label 之后展示一个 icon，hover 之后提示一些信息 | `string` | - |
-| name | 表单对应的字段名 | `string` | - |
+| name | 表单对应的字段名, 跟 ProDescriptions.Item 的[`dataIndex`](https://procomponents.ant.design/components/descriptions#prodescriptionsitem)是同定义 | `string` | - |
 | placeholder | 表单输入框内的默认提示语 | `string` | - |
 | type | 表单输入组件的类型,会生成不同的渲染器，跟 ProForm 的[`valueType`](https://procomponents.ant.design/components/schema#valuetype)是同定义 | `string` | - |
 | fieldProps | 输入组件的属性，可以通过该配置透传 | `object` | - |
