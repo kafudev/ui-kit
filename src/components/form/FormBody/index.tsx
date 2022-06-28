@@ -16,16 +16,19 @@ const FormBody: React.FC<Props> = (props) => {
   const getItemList = (): any[] => {
     const ll = props?.items?.map((item, index) => {
       // 渲染表单组件
-      return RenderFormItem({
-        key: index,
-        mode: 'edit',
-        type: item.type,
-        data: props.values,
-        ...item,
-        itemProps: {
-          ...item?.itemProps,
+      return React.cloneElement(
+        <RenderFormItem
+          {...item}
+          itemProps={{ ...item?.itemProps }}
+          data={props.values}
+          mode={'edit'}
+          type={item.type}
+          key={index}
+        />,
+        {
+          key: index,
         },
-      });
+      );
     });
     const _ll = [];
     for (let index = 0; index < ll.length; index++) {

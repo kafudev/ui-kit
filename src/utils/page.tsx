@@ -92,7 +92,10 @@ export function showDrawer(
 
   // 弹窗属性
   let _dom = dom;
-  let _drawerProps = { ...drawerProps };
+  let _drawerProps = {
+    footerStyle: { display: 'flex', justifyContent: 'flex-end' },
+    ...drawerProps,
+  };
   // 获取组件属性
   if (React.isValidElement(_dom)) {
     // 获取属性
@@ -106,17 +109,38 @@ export function showDrawer(
       if (_drawerProps?.footer) {
         if (Array.isArray(_drawerProps.footer)) {
           _drawerProps.footer.push(
-            <span id={targetId} className="drawerFooterBtn" style={{ marginLeft: '10px' }} />,
+            <span
+              key={targetId}
+              id={targetId}
+              className="drawerFooterBtn"
+              style={{ marginLeft: '10px' }}
+            />,
           );
         }
         if (React.isValidElement(_drawerProps.footer)) {
           _drawerProps.footer = [
             _drawerProps.footer,
-            <span id={targetId} className="drawerFooterBtn" style={{ marginLeft: '10px' }} />,
+            <span
+              key={targetId}
+              id={targetId}
+              className="drawerFooterBtn"
+              style={{ marginLeft: '10px' }}
+            />,
           ];
         }
+        // 循环添加key
+        if (Array.isArray(_drawerProps.footer)) {
+          _drawerProps.footer = _drawerProps.footer.map((item: any) => {
+            if (React.isValidElement(item)) {
+              return React.cloneElement(item, {
+                key: nanoid(),
+              });
+            }
+            return item;
+          });
+        }
       } else {
-        _drawerProps.footer = <span id={targetId} className="drawerFooterBtn" />;
+        _drawerProps.footer = <span key={targetId} id={targetId} className="drawerFooterBtn" />;
       }
     }
   }
@@ -254,16 +278,29 @@ export function showModal(dom: ReactNode, modalProps: ModalProps): React.RefObje
       });
       if (_modalProps?.footer) {
         if (Array.isArray(_modalProps.footer)) {
-          _modalProps.footer.push(<span id={targetId} style={{ marginLeft: '10px' }} />);
+          _modalProps.footer.push(
+            <span key={targetId} id={targetId} style={{ marginLeft: '10px' }} />,
+          );
         }
         if (React.isValidElement(_modalProps.footer)) {
           _modalProps.footer = [
             _modalProps.footer,
-            <span id={targetId} style={{ marginLeft: '10px' }} />,
+            <span key={targetId} id={targetId} style={{ marginLeft: '10px' }} />,
           ];
         }
+        // 循环添加key
+        if (Array.isArray(_modalProps.footer)) {
+          _modalProps.footer = _modalProps.footer.map((item: any) => {
+            if (React.isValidElement(item)) {
+              return React.cloneElement(item, {
+                key: nanoid(),
+              });
+            }
+            return item;
+          });
+        }
       } else {
-        _modalProps.footer = <span id={targetId} />;
+        _modalProps.footer = <span key={targetId} id={targetId} />;
       }
     }
   }

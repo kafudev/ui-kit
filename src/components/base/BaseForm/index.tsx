@@ -95,6 +95,18 @@ const backFormatValues = (_items: any[], _forms: any) => {
 };
 
 const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
+  const {
+    rowCol,
+    labelCol,
+    setFooter,
+    submitTargetId,
+    globalFixedSubmit,
+    layout,
+    onValuesChange,
+    onSubmit,
+    onReset,
+    ...restProps
+  } = props;
   const [items, setItems] = React.useState(props.items);
   const [values, setValues] = React.useState(formatValues(props.items, props?.values));
 
@@ -147,50 +159,44 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
         }
         return await values;
       }}
-      {...props}
+      {...restProps}
       layout={props?.layout}
       submitter={{
-        render: (_: any, doms: any[]) => {
+        render: (_props: any, doms: any[]) => {
           let _doms =
-            props?.layout === LAYOUT_TYPE_HORIZONTAL ? (
+            layout === LAYOUT_TYPE_HORIZONTAL ? (
               <Row>
-                <Col offset={(props?.labelCol as number) || 6 / (props?.rowCol || 1)}>
+                <Col offset={(labelCol as number) || 6 / (rowCol || 1)}>
                   <Space>{doms}</Space>
                 </Col>
               </Row>
             ) : (
               [...doms]
             );
-          if (props?.submitTargetId) {
+          if (submitTargetId) {
             // 如果有父组件需要展示，则推到目标展示
             // 无须添加外围宽度
             _doms = [...doms];
-            // 目标渲染
-            if (props.submitTargetId) {
-              // 动态位置
-              const xx = ReactDOM.createPortal(_doms, document.body);
-              if (typeof props.submitTargetId === 'string') {
-                let xid = document.getElementById(props.submitTargetId);
-                if (xid) {
-                  ReactDOM.render(
-                    <>{xx.children}</>,
-                    document.getElementById(props.submitTargetId),
-                  );
-                }
-              } else {
-                ReactDOM.render(<>{xx.children}</>, props.submitTargetId);
+            // 目标渲染 动态位置
+            const xx = ReactDOM.createPortal(_doms, document.body);
+            if (typeof submitTargetId === 'string') {
+              let xid = document.getElementById(submitTargetId);
+              if (xid) {
+                // @ts-ignore
+                ReactDOM.render(<>{xx.children}</>, document.getElementById(submitTargetId));
               }
+            } else {
+              // @ts-ignore
+              ReactDOM.render(<>{xx.children}</>, submitTargetId);
             }
-
-            return [];
-          } else if (props?.globalFixedSubmit === true) {
+            _doms = [];
+          } else if (globalFixedSubmit === true) {
             // 全局底部固定显示
-            return <FooterToolbar>{_doms}</FooterToolbar>;
-          } else {
-            return _doms;
+            _doms = <FooterToolbar>{_doms}</FooterToolbar>;
           }
+          return _doms;
         },
-        ...props.submitter,
+        ...props?.submitter,
       }}
       onFinish={async (values: any) => {
         // 验证数据后返回
