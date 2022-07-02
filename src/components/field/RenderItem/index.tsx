@@ -8,6 +8,7 @@ import ItemVideo from '../ItemVideo';
 import ItemDocument from '../ItemDocument';
 import ItemUpload from '../ItemUpload';
 import ItemMap from '../ItemMap';
+import ItemArea from '../ItemArea';
 
 export interface RenderItemProps extends PropsWithChildren<any>, ProFieldPropsType {
   mode: 'edit' | 'read' | 'update';
@@ -69,6 +70,8 @@ const RenderItem: React.FC<RenderItemProps> = (props) => {
         return <ItemUpload mode={item?.mode} {...item} />;
       case 'map': // 地图
         return <ItemMap mode={item?.mode} {...item} />;
+      case 'area': // 区域省市区
+        return <ItemArea mode={item?.mode} {...item} />;
       // 以下是原有普通组件，可以直接使用，增加修改部分数据
       case 'input':
       case 'string':

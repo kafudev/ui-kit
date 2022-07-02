@@ -106,7 +106,7 @@ const BaseInfo: React.FC<BaseInfoProps> = React.forwardRef((props, ref) => {
               // header组件占用一行
               span: item.type == 'header' || item.valueType == 'header' ? props?.column || 3 : 1,
               ...item,
-              mode: 'read',
+              mode: item.mode || 'read',
               itemProps: {
                 ...item?.itemProps,
               },

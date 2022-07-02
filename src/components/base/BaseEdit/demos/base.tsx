@@ -9,8 +9,11 @@ const Page: React.FC<BaseEditProps> = (props) => {
     title: '标题',
     place: 'shop_banner',
     image: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    // type: 'horizontal',
+    layout: 'horizontal',
     status: true,
+    status1: true,
+    area: ['33', '3301', '330102'],
+    area2: ['33', '3301', '330102', '330102001'],
   });
   const [items, setItems] = React.useState<any>([
     { label: '基本信息', desc: '表单的基本信息', type: 'header' },
@@ -50,7 +53,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
       max: 5,
       uploadType: 'dragger',
       placeholder: '',
-      rules: [{ required: true, trigger: 'blur' }],
+      rules: [{ required: false, trigger: 'blur' }],
     },
     {
       label: '图集',
@@ -58,7 +61,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
       type: 'gallery',
       max: 5,
       placeholder: '',
-      rules: [{ required: true, trigger: 'blur' }],
+      rules: [{ required: false, trigger: 'blur' }],
     },
     {
       label: '视频',
@@ -66,7 +69,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
       type: 'video',
       max: 1,
       placeholder: '',
-      rules: [{ required: true, trigger: 'blur' }],
+      rules: [{ required: false, trigger: 'blur' }],
     },
     {
       label: '视频集合',
@@ -74,7 +77,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
       type: 'video',
       max: 5,
       placeholder: '',
-      rules: [{ required: true, trigger: 'blur' }],
+      rules: [{ required: false, trigger: 'blur' }],
     },
     {
       label: '文件',
@@ -82,7 +85,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
       type: 'document',
       max: 1,
       placeholder: '',
-      rules: [{ required: true, trigger: 'blur' }],
+      rules: [{ required: false, trigger: 'blur' }],
     },
     {
       label: '文件集合',
@@ -90,7 +93,20 @@ const Page: React.FC<BaseEditProps> = (props) => {
       type: 'document',
       max: 5,
       placeholder: '',
-      rules: [{ required: true, trigger: 'blur' }],
+      rules: [{ required: false, trigger: 'blur' }],
+    },
+    {
+      label: '省市区',
+      name: 'area',
+      type: 'area',
+      rules: [{ required: false, trigger: 'blur', type: 'array' }],
+    },
+    {
+      label: '省市区街道',
+      name: 'area2',
+      type: 'area',
+      areaType: 'pcas',
+      rules: [{ required: false, trigger: 'blur', type: 'array' }],
     },
     {
       label: '位置',
@@ -120,7 +136,8 @@ const Page: React.FC<BaseEditProps> = (props) => {
         { label: '竖排', value: 'vertical' },
       ],
     },
-    { label: '状态', name: 'status', type: 'switch', trueText: '打开', falseText: '关闭' },
+    { label: '状态', name: 'status1', type: 'switch', trueText: '编辑', falseText: '只读' },
+    { label: '读写状态', name: 'status', type: 'switch', trueText: '打开', falseText: '关闭' },
   ]);
 
   // useEffect(() => {
@@ -148,21 +165,35 @@ const Page: React.FC<BaseEditProps> = (props) => {
         const value = changedValues[key];
         switch (key) {
           case 'status':
-            if (value == true) {
-              items[findIndexItems('image', items)].mode = 'edit';
-              items[findIndexItems('gallery', items)].mode = 'edit';
-              items[findIndexItems('gallery', items)].fieldProps = {
-                disabled: false,
-              };
-              setItems([...items]);
-            } else {
-              items[findIndexItems('image', items)].mode = 'read';
-              items[findIndexItems('gallery', items)].mode = 'read';
-              items[findIndexItems('gallery', items)].fieldProps = {
-                disabled: true,
-              };
-              setItems([...items]);
-            }
+            // if (value == true) {
+            //   items[findIndexItems('image', items)].mode = 'edit';
+            //   items[findIndexItems('gallery', items)].mode = 'edit';
+            //   items[findIndexItems('gallery', items)].fieldProps = {
+            //     disabled: false,
+            //   };
+            //   items[findIndexItems('area', items)].mode = 'edit';
+            //   items[findIndexItems('area2', items)].mode = 'edit';
+            //   setItems([...items]);
+            // } else {
+            //   items[findIndexItems('image', items)].mode = 'read';
+            //   items[findIndexItems('gallery', items)].mode = 'read';
+            //   items[findIndexItems('gallery', items)].fieldProps = {
+            //     disabled: true,
+            //   };
+            //   items[findIndexItems('area', items)].mode = 'read';
+            //   items[findIndexItems('area2', items)].mode = 'read';
+            //   setItems([...items]);
+            // }
+            // 循环设置items
+            items.map((item) => {
+              if (item.name !== 'status') {
+                item.mode = value ? 'edit' : 'read';
+              }
+            });
+            setItems([...items]);
+
+            values.status1 = value;
+            setValues({ ...values });
             break;
           case 'layout':
             setLayout(value);

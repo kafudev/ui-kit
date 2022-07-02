@@ -21,7 +21,7 @@ const FormBody: React.FC<Props> = (props) => {
           {...item}
           itemProps={{ ...item?.itemProps }}
           data={props.values}
-          mode={'edit'}
+          mode={item.mode || 'edit'}
           type={item.type}
           key={index}
         />,

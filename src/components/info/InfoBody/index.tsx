@@ -14,10 +14,10 @@ const InfoBody: React.FC<Props> = (props) => {
       {props?.items?.map((item, index) => {
         // 渲染表单组件
         return RenderInfoItem({
-          mode: 'read',
           type: item.type,
           data: props.values,
           ...item,
+          mode: item.mode || 'read',
           itemProps: {
             ...item?.itemProps,
           },
