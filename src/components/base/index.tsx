@@ -4,6 +4,7 @@ import BaseInfo, { BaseInfoProps } from './BaseInfo';
 import BaseList, { BaseListProps } from './BaseList';
 import BaseForm, { BaseFormProps } from './BaseForm';
 import BaseIcon, { BaseIconProps } from './BaseIcon';
+import BaseButton, { BaseButtonProps } from './BaseButton';
 import BaseItem, { BaseItemProps, BaseFormItem, BaseInfoItem } from './BaseItem';
 
 export type {
@@ -12,8 +13,11 @@ export type {
   BaseInfoProps,
   BaseListProps,
   BaseFormProps,
-  BaseIconProps,
   BaseItemProps,
+  BaseIconProps,
+  BaseIconProps as IconProps,
+  BaseButtonProps,
+  BaseButtonProps as ButtonProps,
 };
 
 export default {
@@ -23,6 +27,9 @@ export default {
   BaseList,
   BaseForm,
   BaseIcon,
+  Icon: BaseIcon,
+  BaseButton,
+  Button: BaseButton,
   BaseItem,
   BaseFormItem,
   BaseInfoItem,

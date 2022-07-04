@@ -3,7 +3,8 @@ export { default as BaseList } from './components/base/BaseList';
 export { default as BaseEdit } from './components/base/BaseEdit';
 export { default as BaseInfo } from './components/base/BaseInfo';
 export { default as BaseForm } from './components/base/BaseForm';
-export { default as BaseIcon } from './components/base/BaseIcon';
+export { default as BaseIcon, default as Icon } from './components/base/BaseIcon';
+export { default as BaseButton, default as Button } from './components/base/BaseButton';
 export {
   default as BaseItem,
   BaseFormItem,
@@ -30,5 +31,6 @@ export type { BaseListProps } from './components/base/BaseList';
 export type { BaseEditProps } from './components/base/BaseEdit';
 export type { BaseInfoProps } from './components/base/BaseInfo';
 export type { BaseFormProps } from './components/base/BaseForm';
-export type { BaseIconProps } from './components/base/BaseIcon';
 export type { BaseItemProps } from './components/base/BaseItem';
+export type { BaseIconProps, BaseIconProps as IconProps } from './components/base/BaseIcon';
+export type { BaseButtonProps, BaseButtonProps as ButtonProps } from './components/base/BaseButton';
