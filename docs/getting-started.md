@@ -20,6 +20,7 @@ UI-KIT 是基于 Ant Design 和 ProComponents 而开发的模板组件，提供�
 - [BaseForm](/components/base-form) 表单样式模板组件，提供统一化的表单内页渲染输入
 - [BaseItem](/components/base-item) 输入展示项目组件，提供通用的渲染输入和展示组件能力
 - [BaseIcon](/components/base-icon) 图标展示模板组件，提供通过名称渲染图标的能力
+- [BaseButton](/components/base-button) 基础按钮模板组件，提供颜色类型渲染按钮的能力
 
 在使用之前可以查看一下组件的类型来判断组件是否适合你们的业务。UI-KIT 专注于更统一化的中后台的 CRUD, 预设了相当多的样式和行为。这些行为和样式更改起来会比较困难，如果你的业务需要丰富的自定义建议直接使用 [Ant Design](https://ant.design/) 或者 [ProComponents](https://procomponents.ant.design/) 。
 
