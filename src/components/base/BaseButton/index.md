@@ -35,7 +35,7 @@ BaseButton 是为了可直接通过类型显示的不同颜色的按钮组件，
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | type | 按钮类型，在 Button 的基础类型上，新增了几种按钮类型 | `info \| success \| warning \| error ` | `default` |
-| title | 按钮标题 | `string \| ReactNode` | - |
+| title | 按钮标题, 跟 props.children 同定义，可快捷设置按钮内容 | `string \| ReactNode` | - |
 | backgroundColor | 背景颜色 | `string` | - |
 | color | 文字颜色 | `string` | - |
 | borderColor | 边框颜色 | `string` | - |
