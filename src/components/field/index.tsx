@@ -5,6 +5,7 @@ import ItemImage from './ItemImage';
 import ItemVideo from './ItemVideo';
 import ItemDocument from './ItemDocument';
 import ItemArea from './ItemArea';
+import ItemEditor from './ItemEditor';
 import RenderItem from './RenderItem';
 export {
   RenderItem,
@@ -15,4 +16,5 @@ export {
   ItemVideo,
   ItemDocument,
   ItemArea,
+  ItemEditor,
 };

@@ -12,6 +12,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
     layout: 'horizontal',
     status: true,
     status1: true,
+    editor: '<p>vdvdvddvd</p>',
     area: ['33', '3301', '330102'],
     area2: ['33', '3301', '330102', '330102001'],
   });
@@ -125,6 +126,18 @@ const Page: React.FC<BaseEditProps> = (props) => {
       fieldProps: { maxLength: 100 },
       rules: [{ type: 'string', max: 100, message: '超过最大长度' }],
     },
+    {
+      label: '富文本',
+      name: 'editor',
+      type: 'editor',
+      uploadUrl: '/admin/sys/common/upload',
+      uploadResult: async (res: any) => {
+        if (res?.code == 200) {
+          return { url: res.result };
+        }
+        return {};
+      },
+    },
     { label: '配置信息', desc: '表单的配置信息', type: 'header', borderColor: '#f60' },
     {
       label: '样式',
@@ -185,7 +198,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
             //   setItems([...items]);
             // }
             // 循环设置items
-            items.map((item) => {
+            items.map((item: { name: string; mode: string }) => {
               if (item.name !== 'status') {
                 item.mode = value ? 'edit' : 'read';
               }
