@@ -12,6 +12,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
     layout: 'horizontal',
     status: true,
     status1: true,
+    // lnglat: '116.291378,39.804577',
     editor: '<p>vdvdvddvd</p>',
     area: ['33', '3301', '330102'],
     area2: ['33', '3301', '330102', '330102001'],
@@ -138,6 +139,22 @@ const Page: React.FC<BaseEditProps> = (props) => {
         return {};
       },
     },
+    {
+      label: '地图',
+      name: 'lnglat',
+      type: 'map',
+      appkey: 'c407726980f74ca15448e203b7b3cad9',
+      appsecret: '5b40550d726a78728164a49ce094b728',
+      rules: [{ required: true, trigger: 'blur' }],
+    },
+    {
+      label: '地图-小地图',
+      name: 'lnglat',
+      type: 'map',
+      showMap: true,
+      appkey: 'c407726980f74ca15448e203b7b3cad9',
+      appsecret: '5b40550d726a78728164a49ce094b728',
+    },
     { label: '配置信息', desc: '表单的配置信息', type: 'header', borderColor: '#f60' },
     {
       label: '样式',
@@ -149,7 +166,14 @@ const Page: React.FC<BaseEditProps> = (props) => {
         { label: '竖排', value: 'vertical' },
       ],
     },
-    { label: '状态', name: 'status1', type: 'switch', trueText: '编辑', falseText: '只读' },
+    {
+      label: '状态',
+      name: 'status1',
+      type: 'switch',
+      trueText: '编辑',
+      falseText: '只读',
+      disabled: true,
+    },
     { label: '读写状态', name: 'status', type: 'switch', trueText: '打开', falseText: '关闭' },
   ]);
 

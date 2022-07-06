@@ -38,7 +38,7 @@ const ItemArea = (props: ItemAreaProps) => {
   }, [props?.areaType]);
 
   const renderFormItem = (_text: any, _props: ProFieldFCRenderProps, _dom: JSX.Element) => {
-    console.log(LogTag, ' renderFormItem', _text, _props);
+    // console.log(LogTag, ' renderFormItem', _text, _props);
     return (
       <Cascader
         defaultValue={props.text}
@@ -51,7 +51,7 @@ const ItemArea = (props: ItemAreaProps) => {
     );
   };
   const render = (_text: any, _props: ProFieldFCRenderProps) => {
-    console.log(LogTag, ' render', _text, _props);
+    // console.log(LogTag, ' render', _text, _props);
     return (
       <Cascader
         {...props?.fieldProps}
