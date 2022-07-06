@@ -12,6 +12,7 @@ const Page: React.FC<BaseEditProps> = (props) => {
     layout: 'horizontal',
     status: true,
     status1: true,
+    lnglat: '',
     // lnglat: '116.291378,39.804577',
     editor: '<p>vdvdvddvd</p>',
     area: ['33', '3301', '330102'],

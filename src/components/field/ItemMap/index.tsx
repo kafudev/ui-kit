@@ -22,14 +22,14 @@ export interface ItemMapProps extends RenderItemProps {
 const LogTag = 'ItemMap';
 const ItemMap = (props: ItemMapProps) => {
   const [id] = useState<string>(nanoid());
-  const [recount, setRecount] = useState<number>(0);
   // @ts-ignore
   const [AMap, setAMap] = useState<any>(window.AMap || null);
-  const [showMap, setShowMap] = useState<any>(props?.showMap ?? false);
+  const [refresh, setRefresh] = useState<number>(1);
+  const [showMap, setShowMap] = useState<any>(false);
   const [map, setMap] = useState<any>(null);
   const [map2, setMap2] = useState<any>(null);
-  const [lnglat, setLnglat] = useState<any>(null);
-  const [lnglat2, setLnglat2] = useState<any>(null);
+  const [lnglat, setLnglat] = useState<any>([]);
+  const [lnglat2, setLnglat2] = useState<any>([]);
   const [address, setAddress] = useState<any>('');
   const [address2, setAddress2] = useState<any>('');
   const [addressInfo, setAddressInfo] = useState<any>({});
@@ -48,12 +48,17 @@ const ItemMap = (props: ItemMapProps) => {
   useEffect(() => {
     // 销毁地图实例
     return () => {
+      console.log(LogTag, '销毁地图实例');
       map?.destroy();
       map2?.destroy();
       setMap(null);
       setMap2(null);
     };
   }, []);
+
+  useEffect(() => {
+    setShowMap(props.showMap);
+  }, [props?.showMap]);
 
   useEffect(() => {
     if (props?.appsecret) {
@@ -68,9 +73,7 @@ const ItemMap = (props: ItemMapProps) => {
     // @ts-ignore
     if (AMap) {
       // 初始化地图map2
-      if (!map2) {
-        initMap2(AMap);
-      }
+      initMap2(AMap);
     } else {
       AMapLoader.load({
         key: props?.appkey || '', // 申请好的Web端开发者Key，首次调用 load 时必填
@@ -98,9 +101,7 @@ const ItemMap = (props: ItemMapProps) => {
       })
         .then((AMap) => {
           // 初始化地图map2
-          if (!map2) {
-            initMap2(AMap);
-          }
+          initMap2(AMap);
           // @ts-ignore
           window.AMap = AMap;
           setAMap(AMap);
@@ -109,35 +110,37 @@ const ItemMap = (props: ItemMapProps) => {
           console.log('AMapLoader.load', e);
           if (e === undefined) {
             // 重试次数
-            if (recount < 3) {
+            if (refresh < 3) {
               // 延迟再重新加载
               setTimeout(() => {
-                setRecount(recount + 1);
-                setAMap(undefined);
+                setRefresh(refresh + 1);
               }, 1000);
             }
           }
         });
     }
-  }, [AMap]);
+  }, [refresh]);
 
   // 初始化地图map
   const initMap = (AMap: any) => {
     if (AMap) {
-      const map = new AMap.Map(id, {
+      if (map) {
+        map?.destroy();
+      }
+      const _map = new AMap.Map(id, {
         //设置地图容器id
         viewMode: '3D', //是否为3D地图模式
         zoom: 12, //初始化地图级别
         center: [116.397088, 39.917257], //初始化地图中心点位置
       });
-      map.addControl(new AMap.Scale());
-      map.addControl(new AMap.Geolocation());
-      map.addControl(new AMap.MapType());
-      map.addControl(new AMap.HawkEye({ isOpen: false }));
-      map.addControl(new AMap.ToolBar({ position: 'LB', offset: [20, 100] }));
+      _map.addControl(new AMap.Scale());
+      _map.addControl(new AMap.Geolocation());
+      _map.addControl(new AMap.MapType());
+      _map.addControl(new AMap.HawkEye({ isOpen: false }));
+      _map.addControl(new AMap.ToolBar({ position: 'LB', offset: [20, 100] }));
 
       // 地图点击
-      map.on('click', (ev: { target: any; pixel: any; type: any; lnglat: any }) => {
+      _map.on('click', (ev: { target: any; pixel: any; type: any; lnglat: any }) => {
         console.log('map click ev:', ev.lnglat, ev);
         // 触发事件的对象
         let target = ev.target;
@@ -148,14 +151,13 @@ const ItemMap = (props: ItemMapProps) => {
         // 触发事件的地理坐标，AMap.LngLat 类型
         let lnglat_a = ev.lnglat;
         if (lnglat_a) {
-          let lnglat = [lnglat_a.lng, lnglat_a.lat];
-          setLnglat(lnglat);
-          map.setCenter(lnglat);
+          const _lnglat = [lnglat_a.lng, lnglat_a.lat];
+          setLnglat(_lnglat);
         }
       });
 
       // 加载地理编码插件
-      map.plugin(['AMap.Geocoder'], () => {
+      _map?.plugin(['AMap.Geocoder'], () => {
         //加载地理编码插件
         const geocoder = new AMap.Geocoder({
           radius: 3000, //以已知坐标为中心点，radius为半径，返回范围内兴趣点和道路信息
@@ -184,7 +186,6 @@ const ItemMap = (props: ItemMapProps) => {
                 if (poiResult && poiResult.item && poiResult.item.location) {
                   let lnglat = [poiResult.item.location.lng, poiResult.item.location.lat];
                   setLnglat(lnglat);
-                  map.setCenter(lnglat);
                 }
               },
             );
@@ -204,14 +205,17 @@ const ItemMap = (props: ItemMapProps) => {
       //   // 无需再手动执行search方法，autoComplete会根据传入input对应的DOM动态触发search
       // });
 
-      setMap(map);
+      setMap(_map);
     }
   };
 
   // 初始化地图map2
   const initMap2 = (AMap: any) => {
     if (AMap) {
-      const map2 = new AMap.Map(id + '_2', {
+      if (map2) {
+        map2?.destroy();
+      }
+      const _map2 = new AMap.Map(id + '_2', {
         //设置地图容器id
         viewMode: '3D', //是否为3D地图模式
         zoom: 12, //初始化地图级别
@@ -219,7 +223,7 @@ const ItemMap = (props: ItemMapProps) => {
       });
 
       // 加载地理编码插件
-      map2.plugin(['AMap.Geocoder'], () => {
+      _map2?.plugin(['AMap.Geocoder'], () => {
         //加载地理编码插件
         const geocoder = new AMap.Geocoder({
           radius: 3000, //以已知坐标为中心点，radius为半径，返回范围内兴趣点和道路信息
@@ -228,33 +232,46 @@ const ItemMap = (props: ItemMapProps) => {
         setGeocoder2(geocoder);
       });
 
-      setMap2(map2);
+      setMap2(_map2);
     }
   };
 
   useEffect(() => {
-    let _lnglat = props?.value || '';
+    let _lnglat = props?.value || null;
     if (typeof _lnglat === 'string') {
-      // 分隔字符串经纬度
-      _lnglat = _lnglat.split(',');
-      if (_lnglat[0] && _lnglat[1]) {
-        _lnglat = [parseFloat(_lnglat[0]), parseFloat(_lnglat[1])];
-      } else {
-        _lnglat = '';
+      if (_lnglat) {
+        // 分隔字符串经纬度
+        _lnglat = _lnglat.split(',');
+        if (_lnglat[0] && _lnglat[1]) {
+          _lnglat = [parseFloat(_lnglat[0]), parseFloat(_lnglat[1])];
+        } else {
+          _lnglat = null;
+        }
       }
     }
+    console.log(LogTag, 'mode ', props?.mode, ' value', props?.value, ' _lnglat', _lnglat);
     if (props?.mode == 'read') {
-      if (_lnglat) {
-        setLnglat(_lnglat);
-        setLnglat2(_lnglat);
+      if (AMap) {
+        if (_lnglat && _lnglat?.length > 0) {
+          if (_lnglat !== lnglat) {
+            console.log(LogTag, 'mode111 ', props?.mode, ' _lnglat', _lnglat);
+            setLnglat(_lnglat);
+            setLnglat2(_lnglat);
+          }
+        }
       }
       setReadOnly(true);
       setDisabled(true);
     }
     if (props?.mode == 'edit') {
-      if (_lnglat) {
-        setLnglat(_lnglat);
-        setLnglat2(_lnglat);
+      if (AMap) {
+        if (_lnglat && _lnglat?.length > 0) {
+          if (_lnglat !== lnglat) {
+            console.log(LogTag, 'mode222 ', props?.mode, ' _lnglat', _lnglat);
+            setLnglat(_lnglat);
+            setLnglat2(_lnglat);
+          }
+        }
       }
       setReadOnly(false);
       setDisabled(false);
@@ -264,8 +281,7 @@ const ItemMap = (props: ItemMapProps) => {
   useEffect(() => {
     if (AMap) {
       // 查询地图上的地址信息
-      console.log('useEffect lnglat', lnglat);
-      if (lnglat) {
+      if (lnglat && lnglat?.length > 0) {
         // 添加点标记
         if (map) {
           if (marker) {
@@ -276,6 +292,7 @@ const ItemMap = (props: ItemMapProps) => {
             zIndex: 10000,
             position: lnglat, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
           });
+          console.log('useEffect lnglat', lnglat, map, marker0);
           // 将创建的点标记添加到已有的地图实例：
           map?.add(marker0);
           map?.setCenter(lnglat);
@@ -300,8 +317,10 @@ const ItemMap = (props: ItemMapProps) => {
   useEffect(() => {
     if (AMap) {
       // 查询地图上的地址信息
-      console.log('useEffect lnglat2', lnglat2);
-      if (lnglat2) {
+      if (lnglat2 && lnglat2?.length > 0) {
+        if (!showMap) {
+          return;
+        }
         // 添加点标记
         if (map2) {
           if (marker2) {
@@ -312,6 +331,7 @@ const ItemMap = (props: ItemMapProps) => {
             zIndex: 10000,
             position: lnglat2, // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
           });
+          console.log('useEffect lnglat2', lnglat2, map2, marker20);
           // 将创建的点标记添加到已有的地图实例：
           map2?.add(marker20);
           map2?.setCenter(lnglat2);
@@ -338,26 +358,21 @@ const ItemMap = (props: ItemMapProps) => {
     if (mapModal) {
       setTimeout(() => {
         // 初始化地图编辑
-        if (map) {
-          map?.destroy();
-        }
         initMap(AMap);
-      }, 1000);
+      }, 500);
     }
-    return () => {
-      map?.destroy();
-      setMap(null);
-    };
   }, [mapModal]);
 
   const handleOk = () => {
     // 更新数据
-    let _lnglat = lnglat.join(',');
-    props?.onChange?.(_lnglat, address, addressInfo);
-    if (lnglat) {
-      setLnglat2(lnglat || '');
-      setAddress2(address2 || '');
-      setAddressInfo2(addressInfo2 || {});
+    if (lnglat && lnglat?.length > 0) {
+      let _lnglat = lnglat.join(',');
+      props?.onChange?.(_lnglat, address, addressInfo);
+      if (lnglat) {
+        setLnglat2(lnglat || '');
+        setAddress2(address2 || '');
+        setAddressInfo2(addressInfo2 || {});
+      }
     }
     setMapModal(false);
   };
@@ -558,8 +573,8 @@ const ItemMap = (props: ItemMapProps) => {
     <ProField
       {...props}
       mode={props?.mode}
-      renderFormItem={renderFormItem}
-      render={render}
+      renderFormItem={renderMap}
+      render={renderMap}
       text={props.text}
     />
   );
