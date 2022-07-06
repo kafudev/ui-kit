@@ -159,7 +159,7 @@ const ItemEditor = (props: ItemEditorProps) => {
   }, [props?.contentType]);
 
   const renderFormItem = (_text: any, _props: ProFieldFCRenderProps, _dom: JSX.Element) => {
-    console.log(LogTag, ' renderFormItem', _text, _props);
+    // console.log(LogTag, ' renderFormItem', _text, _props);
     return (
       <div
         className="ItemEditorContainer"
@@ -195,7 +195,7 @@ const ItemEditor = (props: ItemEditorProps) => {
     );
   };
   const render = (_text: any, _props: ProFieldFCRenderProps) => {
-    console.log(LogTag, ' render', _text, _props);
+    // console.log(LogTag, ' render', _text, _props);
     return (
       <div
         className="ItemEditorContainer"
