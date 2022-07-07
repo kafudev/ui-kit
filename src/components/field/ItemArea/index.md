@@ -86,4 +86,5 @@ export default () => {
 | --- | --- | --- | --- |
 | areaType | 地区数据类型，省市区三级 pca、省市区街道四级 pcas | `pca \| pcas` | `'pca'` |
 | fieldProps | Cascader 组件自带属性, 可参照 Cascader 组件 | `object` | - |
+| onChange | 数据更新，返回 value 和地址结构数据 | `(value: any, info: any) => void` | - |
 | ... | 继承 BaseItem 的定义,详细可以看[这里](/components/base-item) | `` | - |

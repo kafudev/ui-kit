@@ -55,4 +55,5 @@ export default () => (
 | toolbarConfig | 工具栏配置，参考[wangEditor 配置](https://www.wangeditor.com/v5/toolbar-config.html) | `ToolbarConfig` | - |
 | uploadUrl | 上传请求链接 | `string` | - |
 | uploadResult | 上传请求完成数据处理，可格式化 uploadUrl 请求后的数据 | `(res: any) => { url: string; alt?: string; href?: string }` | - |
+| onChange | 数据更新，返回 value 和结构内容数据 | `(value: any, content: any, editor: any) => void` | - |
 | ... | 继承 BaseItem 的定义,详细可以看[这里](/components/base-item) | `` | - |

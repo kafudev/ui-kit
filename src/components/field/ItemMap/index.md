@@ -63,4 +63,5 @@ export default () => (
 | height | 地图组件高度，设置 auto 为可自动拉伸 | `string` | '200px' |
 | showMap | 是否显示小地图，默认不显示 | `boolean` | false |
 | plugins | 插件集合(\*暂无效) ，参考[amap 插件配置](https://lbs.amap.com/api/jsapi-v2/guide/abc/plugins) | `any` | - |
+| onChange | 数据更新，返回 value 和地址信息 | `(value: any, address?: any, addressInfo?: any) => void` | - |
 | ... | 继承 BaseItem 的定义,详细可以看[这里](/components/base-item) | `` | - |

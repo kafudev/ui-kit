@@ -131,17 +131,17 @@ const ItemMap = (props: ItemMapProps) => {
         //设置地图容器id
         viewMode: '3D', //是否为3D地图模式
         zoom: 12, //初始化地图级别
-        center: [116.397088, 39.917257], //初始化地图中心点位置
+        // center: [116.397088, 39.917257], //初始化地图中心点位置
       });
       _map.addControl(new AMap.Scale());
-      _map.addControl(new AMap.Geolocation());
+      _map.addControl(new AMap.Geolocation({ extensions: 'all' }));
       _map.addControl(new AMap.MapType());
       _map.addControl(new AMap.HawkEye({ isOpen: false }));
       _map.addControl(new AMap.ToolBar({ position: 'LB', offset: [20, 100] }));
 
       // 地图点击
       _map.on('click', (ev: { target: any; pixel: any; type: any; lnglat: any }) => {
-        console.log('map click ev:', ev.lnglat, ev);
+        console.log('map click ev:', ev?.lnglat, ev);
         // 触发事件的对象
         let target = ev.target;
         // 触发事件的像素坐标，AMap.Pixel 类型
@@ -154,6 +154,24 @@ const ItemMap = (props: ItemMapProps) => {
           const _lnglat = [lnglat_a.lng, lnglat_a.lat];
           setLnglat(_lnglat);
         }
+      });
+
+      // 加载定位插件
+      _map?.plugin('AMap.Geolocation', () => {
+        const geolocation = new AMap.Geolocation({ extensions: 'all' });
+        // 地图完成事件
+        geolocation.on('complete', (result: any) => {
+          console.log('geolocation complete result:', result);
+          let lnglat_a = result?.position;
+          if (lnglat_a) {
+            const _lnglat = [lnglat_a.lng, lnglat_a.lat];
+            setLnglat(_lnglat);
+          }
+        });
+        geolocation.on('error', (result: any) => {
+          console.log('geolocation complete error:', result);
+        });
+        _map.addControl(geolocation);
       });
 
       // 加载地理编码插件
@@ -219,7 +237,7 @@ const ItemMap = (props: ItemMapProps) => {
         //设置地图容器id
         viewMode: '3D', //是否为3D地图模式
         zoom: 12, //初始化地图级别
-        center: [116.397088, 39.917257], //初始化地图中心点位置
+        // center: [116.397088, 39.917257], //初始化地图中心点位置
       });
 
       // 加载地理编码插件
@@ -304,9 +322,11 @@ const ItemMap = (props: ItemMapProps) => {
           geocoder.getAddress(lnglat, (status: any, result: any) => {
             console.log('geocoder getAddress', status, result);
             if (status === 'complete' && result.info === 'OK') {
-              setAddress(result?.regeocode?.formattedAddress || '');
-              setAddressInfo(result?.regeocode?.addressComponent || {});
-              console.log('useEffect address', address, addressInfo);
+              const _address = result.regeocode?.formattedAddress || '';
+              const _addressInfo = result.regeocode?.addressComponent || {};
+              setAddress(_address);
+              setAddressInfo(_addressInfo);
+              console.log('useEffect address', _address, _addressInfo);
             }
           });
         }
@@ -343,9 +363,11 @@ const ItemMap = (props: ItemMapProps) => {
           geocoder2.getAddress(lnglat2, (status: any, result: any) => {
             console.log('geocoder getAddress', status, result);
             if (status === 'complete' && result.info === 'OK') {
-              setAddress2(result?.regeocode?.formattedAddress || '');
-              setAddressInfo2(result?.regeocode?.addressComponent || {});
-              console.log('useEffect address2', address, addressInfo);
+              const _address2 = result.regeocode?.formattedAddress || '';
+              const _addressInfo2 = result.regeocode?.addressComponent || {};
+              setAddress2(_address2);
+              setAddressInfo2(_addressInfo2);
+              console.log('useEffect address2', _address2, _addressInfo2);
             }
           });
         }
@@ -368,10 +390,10 @@ const ItemMap = (props: ItemMapProps) => {
     if (lnglat && lnglat?.length > 0) {
       let _lnglat = lnglat.join(',');
       props?.onChange?.(_lnglat, address, addressInfo);
-      if (lnglat) {
-        setLnglat2(lnglat || '');
-        setAddress2(address2 || '');
-        setAddressInfo2(addressInfo2 || {});
+      if (_lnglat) {
+        setLnglat2(_lnglat || '');
+        setAddress2(address || '');
+        setAddressInfo2(addressInfo || {});
       }
     }
     setMapModal(false);
@@ -432,10 +454,10 @@ const ItemMap = (props: ItemMapProps) => {
           <div style={{ textAlign: 'left' }}>
             <Typography
               style={{
-                height: '22px',
-                lineHeight: '22px',
+                // height: '22px',
+                // lineHeight: '22px',
                 ...{ ...(showMap ? { position: 'relative' } : {}) },
-                ...{ ...(showMap ? { marginTop: '-50px' } : {}) },
+                ...{ ...(showMap ? { marginTop: '-70px' } : {}) },
                 marginLeft: '5px',
                 zIndex: 101,
               }}
