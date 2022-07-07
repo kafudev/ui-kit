@@ -429,16 +429,18 @@ const ItemMap = (props: ItemMapProps) => {
               />
             </CopyToClipboard>
           </Tooltip>
-          <Button
-            type="primary"
-            style={{ width: '100px' }}
-            disabled={disabled}
-            onClick={() => {
-              setMapModal(true);
-            }}
-          >
-            选择地图
-          </Button>
+          {readOnly ? null : (
+            <Button
+              type="primary"
+              style={{ width: '100px' }}
+              disabled={disabled}
+              onClick={() => {
+                setMapModal(true);
+              }}
+            >
+              选择地图
+            </Button>
+          )}
         </Input.Group>
         <div
           id={id + '_2'}
