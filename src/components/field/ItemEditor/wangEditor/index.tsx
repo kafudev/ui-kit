@@ -22,6 +22,7 @@ export interface ItemEditorProps extends RenderItemProps {
   uploadUrl?: string; // 上传链接
   uploadResult?: (res: any) => { url: string; alt?: string; href?: string }; // 请求结果处理
   onChange?: (value: any, content: any, editor: any) => void;
+  onBlur?: (value: any, content: any, editor: any) => void;
 }
 const LogTag = 'ItemEditor';
 const ItemEditor = (props: ItemEditorProps) => {
@@ -96,12 +97,12 @@ const ItemEditor = (props: ItemEditorProps) => {
           // 当编辑器选区、内容变化时，即触发
           // console.log('content', editor.children);
           // console.log('html', editor.getHtml());
-          // props?.onChange?.(editor.getHtml(), editor.children, editor);
+          props?.onChange?.(editor.getHtml(), editor.children, editor);
         },
         onBlur: (editor: IDomEditor) => {
           // editor blur
           console.log(LogTag, 'wangEditor onBlur: ');
-          props?.onChange?.(editor.getHtml(), editor.children, editor);
+          props?.onBlur?.(editor.getHtml(), editor.children, editor);
         },
       },
       mode: props.modeType || 'default', // 或 'simple'
