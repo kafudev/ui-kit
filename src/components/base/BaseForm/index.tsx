@@ -131,7 +131,7 @@ const BaseForm: React.FC<BaseFormProps> = React.forwardRef((props, ref) => {
       // 格式化数据
       const newForms = formatValues(items, props.values);
       setValues(newForms);
-      formRef?.current?.setFieldsValue(newForms);
+      formRef?.current?.setFieldsValue?.(newForms);
       console.log(LogTag, 'formatValues Forms', props.values, newForms);
     }
   }, [props.values]);
